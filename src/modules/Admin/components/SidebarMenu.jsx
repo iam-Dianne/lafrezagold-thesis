@@ -1,31 +1,25 @@
 import React from "react";
 import { useState } from "react";
 
-import { FaHouse } from "react-icons/fa6";
-import { FaDoorClosed } from "react-icons/fa6";
+import {
+  FaHouse,
+  FaDoorClosed,
+  FaCalendar,
+  FaUser,
+  FaUsers,
+  FaReceipt,
+  FaCreditCard,
+} from "react-icons/fa6";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { FaCalendar } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { IoMdPerson } from "react-icons/io";
 
 const SidebarMenu = () => {
-  // dropdown logic. set state isRoomsDropdownOpen = default value is FALSE
-  // function to call natin is setRoomsDropdownOpen to toggle the state
-  const [isRoomsDropdownOpen, setRoomsDropdownOpen] = useState(false);
-  const [isResDropdownOpen, setResDropdownOpen] = useState(false);
-  const [isGuestsDropdownOpen, setGuestsDropdownOpen] = useState(false);
-  const [isStaffDropdownOpen, setStaffDropdownOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState("");
 
+  // setActiveDropdown naguupdate ng activeDropdown state and keeps track if it is currently active or nah
+  // so bali Clicking on an already-open dropdown closes it.
   const toggleDropdown = (dropdown) => {
-    if (dropdown === "rooms") {
-      setRoomsDropdownOpen((prev) => !prev);
-    } else if (dropdown === "reservations") {
-      setResDropdownOpen((prev) => !prev);
-    } else if (dropdown === "guests") {
-      setGuestsDropdownOpen((prev) => !prev);
-    } else if (dropdown === "staff") {
-      setStaffDropdownOpen((prev) => !prev);
-    }
+    // so this basically says: is this dropdown already open? if not the drop down eyy
+    setActiveDropdown((prev) => (prev === dropdown ? "" : dropdown));
   };
 
   return (
@@ -53,7 +47,7 @@ const SidebarMenu = () => {
               type="button"
               className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
               onClick={() => toggleDropdown("rooms")}
-              aria-expanded={isRoomsDropdownOpen}
+              aria-expanded={activeDropdown === "rooms"}
               aria-controls="dropdown-rooms"
             >
               <div className="flex items-center">
@@ -64,7 +58,7 @@ const SidebarMenu = () => {
             </button>
             <ul
               id="dropdown-rooms"
-              className={`${isRoomsDropdownOpen ? "block" : "hidden"}`}
+              className={`${activeDropdown === "rooms" ? "block" : "hidden"}`}
             >
               <li>
                 <a
@@ -99,8 +93,8 @@ const SidebarMenu = () => {
               type="button"
               className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
               onClick={() => toggleDropdown("reservations")}
-              aria-expanded={isResDropdownOpen}
-              aria-controls="dropdown-rooms"
+              aria-expanded={activeDropdown === "reservations"}
+              aria-controls="dropdown-reservations"
             >
               <div className="flex items-center">
                 <FaCalendar className="mr-4" size={18} />
@@ -109,8 +103,10 @@ const SidebarMenu = () => {
               <RiArrowDropDownLine size={28} className="items-center" />
             </button>
             <ul
-              id="dropdown-rooms"
-              className={`${isResDropdownOpen ? "block" : "hidden"}`}
+              id="dropdown-reservations"
+              className={`${
+                activeDropdown === "reservations" ? "block" : "hidden"
+              }`}
             >
               <li>
                 <a
@@ -133,7 +129,7 @@ const SidebarMenu = () => {
                   href="#"
                   className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
                 >
-                  Approved
+                  Completed
                 </a>
               </li>
               <li>
@@ -153,8 +149,8 @@ const SidebarMenu = () => {
               type="button"
               className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
               onClick={() => toggleDropdown("guests")}
-              aria-expanded={isGuestsDropdownOpen}
-              aria-controls="dropdown-rooms"
+              aria-expanded={activeDropdown === "guests"}
+              aria-controls="dropdown-guests"
             >
               <div className="flex items-center">
                 <FaUser className="mr-4" size={18} />
@@ -163,8 +159,8 @@ const SidebarMenu = () => {
               <RiArrowDropDownLine size={28} className="items-center" />
             </button>
             <ul
-              id="dropdown-rooms"
-              className={`${isGuestsDropdownOpen ? "block" : "hidden"}`}
+              id="dropdown-guests"
+              className={`${activeDropdown === "guests" ? "block" : "hidden"}`}
             >
               <li>
                 <a
@@ -198,26 +194,26 @@ const SidebarMenu = () => {
             <button
               type="button"
               className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
-              onClick={() => toggleDropdown("guests")}
-              aria-expanded={isGuestsDropdownOpen}
-              aria-controls="dropdown-rooms"
+              onClick={() => toggleDropdown("staff")}
+              aria-expanded={activeDropdown === "staff"}
+              aria-controls="dropdown-staff"
             >
               <div className="flex items-center">
-                <FaUser className="mr-4" size={18} />
+                <FaUsers className="mr-4" size={18} />
                 <span>Staff</span>
               </div>
               <RiArrowDropDownLine size={28} className="items-center" />
             </button>
             <ul
-              id="dropdown-rooms"
-              className={`${isGuestsDropdownOpen ? "block" : "hidden"}`}
+              id="dropdown-staff"
+              className={`${activeDropdown === "staff" ? "block" : "hidden"}`}
             >
               <li>
                 <a
                   href="#"
                   className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
                 >
-                  All Guests
+                  All Staff
                 </a>
               </li>
               <li>
@@ -225,7 +221,37 @@ const SidebarMenu = () => {
                   href="#"
                   className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
                 >
-                  Guest History
+                  Add New Staff
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* REPORTS TOGGLE */}
+          <li>
+            <button
+              type="button"
+              className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+              onClick={() => toggleDropdown("reports")}
+              aria-expanded={activeDropdown === "reports"}
+              aria-controls="dropdown-reports"
+            >
+              <div className="flex items-center">
+                <FaReceipt className="mr-4" size={18} />
+                <span>Reports</span>
+              </div>
+              <RiArrowDropDownLine size={28} className="items-center" />
+            </button>
+            <ul
+              id="dropdown-reports"
+              className={`${activeDropdown === "reports" ? "block" : "hidden"}`}
+            >
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                >
+                  Revenue Report
                 </a>
               </li>
               <li>
@@ -233,7 +259,55 @@ const SidebarMenu = () => {
                   href="#"
                   className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
                 >
-                  Guest Feedback
+                  Occupancy Report
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          {/* TRANSACTIONS TOGGLE */}
+          <li>
+            <button
+              type="button"
+              className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+              onClick={() => toggleDropdown("transactions")}
+              aria-expanded={activeDropdown === "transactions"}
+              aria-controls="dropdown-transactions"
+            >
+              <div className="flex items-center">
+                <FaCreditCard className="mr-4" size={18} />
+                <span>Transactions</span>
+              </div>
+              <RiArrowDropDownLine size={28} className="items-center" />
+            </button>
+            <ul
+              id="dropdown-transactions"
+              className={`${
+                activeDropdown === "transactions" ? "block" : "hidden"
+              }`}
+            >
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                >
+                  All Transactions
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                >
+                  Pending Transactions
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                >
+                  Refund Requests
                 </a>
               </li>
             </ul>
