@@ -1,14 +1,27 @@
 import React from "react";
-import SidebarMenu from "./modules/Admin/components/SidebarMenu";
-import Navbar from "./components/Navbar";
+import {
+  Route,
+  Routes,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+
+import AdminLayout from "./layouts/AdminLayout";
+import Dashboard from "./pages/Admin/Dashboard";
+import Guests from "./pages/Admin/Guests";
+import ManageStaff from "./pages/Admin/ManageStaff";
+import Reports from "./pages/Admin/Reports";
+import Reservations from "./pages/Admin/Reservations";
+import Rooms from "./pages/Admin/Rooms";
+import Transactions from "./pages/Admin/Transactions";
 
 const App = () => {
-  return (
-    <>
-      <SidebarMenu />
-      <Navbar />
-    </>
+  const router = createBrowserRouter(
+    createRoutesFromElements(<Route index element={<AdminLayout />} />)
   );
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;

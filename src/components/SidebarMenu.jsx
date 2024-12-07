@@ -26,7 +26,7 @@ const SidebarMenu = () => {
 
   return (
     <aside id="default-sidebar" className="fixed w-64 h-screen">
-      <div className="h-full px-4 py-5 bg-yellow-400 overflow-y-auto">
+      <div className="h-full px-4 py-5 overflow-y-auto">
         {/* whole sidebar content */}
         <div className="sidebar-content flex flex-col justify-between h-full">
           <div className="logo-and-content">
@@ -39,7 +39,7 @@ const SidebarMenu = () => {
               <li>
                 <a
                   link="#"
-                  className="flex items-center text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                  className="flex items-center text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                 >
                   <FaHouse className="mr-4 items-center" size={18} />
                   <span>Dashboard</span>
@@ -50,7 +50,7 @@ const SidebarMenu = () => {
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("rooms")}
                   aria-expanded={activeDropdown === "rooms"}
                   aria-controls="dropdown-rooms"
@@ -59,46 +59,14 @@ const SidebarMenu = () => {
                     <FaDoorClosed className="mr-4" size={18} />
                     <span>Rooms</span>
                   </div>
-                  <RiArrowDropDownLine size={28} className="items-center" />
                 </button>
-                <ul
-                  id="dropdown-rooms"
-                  className={`${
-                    activeDropdown === "rooms" ? "block" : "hidden"
-                  }`}
-                >
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      All Rooms
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Add New Room
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Availability
-                    </a>
-                  </li>
-                </ul>
               </li>
 
               {/* RESERVATIONS TOGGLE */}
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("reservations")}
                   aria-expanded={activeDropdown === "reservations"}
                   aria-controls="dropdown-reservations"
@@ -118,23 +86,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      All Reservations
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Pending
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Completed
                     </a>
@@ -142,7 +94,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Calendar
                     </a>
@@ -154,7 +106,7 @@ const SidebarMenu = () => {
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("guests")}
                   aria-expanded={activeDropdown === "guests"}
                   aria-controls="dropdown-guests"
@@ -174,15 +126,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      All Guests
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Guest History
                     </a>
@@ -190,7 +134,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Guest Feedback
                     </a>
@@ -202,7 +146,7 @@ const SidebarMenu = () => {
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("staff")}
                   aria-expanded={activeDropdown === "staff"}
                   aria-controls="dropdown-staff"
@@ -211,38 +155,14 @@ const SidebarMenu = () => {
                     <FaUsers className="mr-4" size={18} />
                     <span>Staff</span>
                   </div>
-                  <RiArrowDropDownLine size={28} className="items-center" />
                 </button>
-                <ul
-                  id="dropdown-staff"
-                  className={`${
-                    activeDropdown === "staff" ? "block" : "hidden"
-                  }`}
-                >
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      All Staff
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Add New Staff
-                    </a>
-                  </li>
-                </ul>
               </li>
 
               {/* REPORTS TOGGLE */}
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("reports")}
                   aria-expanded={activeDropdown === "reports"}
                   aria-controls="dropdown-reports"
@@ -251,38 +171,14 @@ const SidebarMenu = () => {
                     <FaReceipt className="mr-4" size={18} />
                     <span>Reports</span>
                   </div>
-                  <RiArrowDropDownLine size={28} className="items-center" />
                 </button>
-                <ul
-                  id="dropdown-reports"
-                  className={`${
-                    activeDropdown === "reports" ? "block" : "hidden"
-                  }`}
-                >
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Revenue Report
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      Occupancy Report
-                    </a>
-                  </li>
-                </ul>
               </li>
 
               {/* TRANSACTIONS TOGGLE */}
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
                   onClick={() => toggleDropdown("transactions")}
                   aria-expanded={activeDropdown === "transactions"}
                   aria-controls="dropdown-transactions"
@@ -302,15 +198,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
-                    >
-                      All Transactions
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Pending Transactions
                     </a>
@@ -318,7 +206,7 @@ const SidebarMenu = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Refund Requests
                     </a>
@@ -331,7 +219,7 @@ const SidebarMenu = () => {
           <div className="profile-menu">
             <button
               type="button"
-              className="flex items-center justify-between w-full text-gray-900 hover:bg-yellow-200 py-2 px-3 rounded-lg transition duration-75"
+              className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
             >
               <div className="flex items-center">
                 <FaSignOutAlt
