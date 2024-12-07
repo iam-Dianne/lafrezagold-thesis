@@ -10,14 +10,12 @@ import {
   FaReceipt,
   FaCreditCard,
   FaBars,
-  FaChevronLeft,
 } from "react-icons/fa6";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 
 const SidebarMenu = () => {
   const [activeDropdown, setActiveDropdown] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // setActiveDropdown naguupdate ng activeDropdown state and keeps track if it is currently active or nah
   // so bali Clicking on an already-open dropdown closes it.
@@ -26,46 +24,16 @@ const SidebarMenu = () => {
     setActiveDropdown((prev) => (prev === dropdown ? "" : dropdown));
   };
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
   return (
     <aside id="default-sidebar" className="fixed w-64 h-screen">
       <div className="h-full px-4 py-5 bg-yellow-400 overflow-y-auto">
-        {/* sidebar toggle */}
-        {!isSidebarOpen && (
-          <button
-            className="hamburger-button text-gray-900 mb-6 lg:hidden"
-            onClick={toggleSidebar}
-          >
-            <FaBars size={24} />
-          </button>
-        )}
-
         {/* whole sidebar content */}
-        <div
-          className={`sidebar-content flex flex-col justify-between h-full ${
-            isSidebarOpen ? "block" : "hidden"
-          } lg:flex`}
-        >
+        <div className="sidebar-content flex flex-col justify-between h-full">
           <div className="logo-and-content">
             <div className="logo mb-6 px-3">
-              <div className="flex">
-                <div className="flex items-center">
-                  {isSidebarOpen && (
-                    <button
-                      className="hamburger-button text-gray-900 lg:hidden mr-5"
-                      onClick={toggleSidebar}
-                    >
-                      <FaChevronLeft size={18} />
-                    </button>
-                  )}
-                </div>
-                <span className="text-xl font-semibold text-gray-900 ">
-                  LA FREZA GOLD
-                </span>
-              </div>
+              <span className="text-xl font-semibold text-gray-900 ">
+                LA FREZA GOLD
+              </span>
             </div>
             <ul className="">
               <li>
