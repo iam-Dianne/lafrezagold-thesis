@@ -39,7 +39,7 @@ const SidebarMenu = () => {
               <li>
                 <a
                   link="#"
-                  className="flex items-center text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
+                  className="flex items-center text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg cursor-pointer"
                 >
                   <FaHouse className="mr-4 items-center" size={18} />
                   <span>Dashboard</span>
