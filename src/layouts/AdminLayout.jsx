@@ -1,12 +1,17 @@
 import React from "react";
-import SidebarMenu from "../components/SidebarMenu";
+import { Outlet } from "react-router-dom";
+import SidebarMenu from "../pages/Admin/SidebarMenu";
+import Navbar from "../components/Navbar";
 import ContentCanvas from "../components/ContentCanvas";
 
 const AdminLayout = () => {
   return (
     <div className="flex bg-gray-200">
       <SidebarMenu />
-      <ContentCanvas />
+      <ContentCanvas>
+        <Navbar />
+        <Outlet />
+      </ContentCanvas>
     </div>
   );
 };

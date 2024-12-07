@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
   FaHouse,
@@ -37,29 +38,26 @@ const SidebarMenu = () => {
             </div>
             <ul className="">
               <li>
-                <a
-                  link="#"
+                <Link
+                  to="/admin"
                   className="flex items-center text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg cursor-pointer"
                 >
                   <FaHouse className="mr-4 items-center" size={18} />
                   <span>Dashboard</span>
-                </a>
+                </Link>
               </li>
 
               {/* ROOMS TOGGLE */}
               <li>
-                <button
-                  type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                  onClick={() => toggleDropdown("rooms")}
-                  aria-expanded={activeDropdown === "rooms"}
-                  aria-controls="dropdown-rooms"
+                <Link
+                  to="/admin/rooms"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-7 cursor-pointer"
                 >
                   <div className="flex items-center">
                     <FaDoorClosed className="mr-4" size={18} />
                     <span>Rooms</span>
                   </div>
-                </button>
+                </Link>
               </li>
 
               {/* RESERVATIONS TOGGLE */}
@@ -84,20 +82,28 @@ const SidebarMenu = () => {
                   }`}
                 >
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/reservations"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
-                      Completed
-                    </a>
+                      All Reservations
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/reservations-history"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
+                    >
+                      Reservation History
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/reservations-calendar"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Calendar
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>
@@ -124,54 +130,56 @@ const SidebarMenu = () => {
                   }`}
                 >
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/guests"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
+                    >
+                      All Guests
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/guests-history"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Guest History
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/guests-feedback"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Guest Feedback
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>
 
               {/* STAFF TOGGLE */}
               <li>
-                <button
-                  type="button"
+                <Link
+                  to="/admin/manage-staff"
                   className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                  onClick={() => toggleDropdown("staff")}
-                  aria-expanded={activeDropdown === "staff"}
-                  aria-controls="dropdown-staff"
                 >
                   <div className="flex items-center">
                     <FaUsers className="mr-4" size={18} />
                     <span>Staff</span>
                   </div>
-                </button>
+                </Link>
               </li>
 
               {/* REPORTS TOGGLE */}
               <li>
-                <button
-                  type="button"
+                <Link
+                  to="/admin/reports"
                   className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                  onClick={() => toggleDropdown("reports")}
-                  aria-expanded={activeDropdown === "reports"}
-                  aria-controls="dropdown-reports"
                 >
                   <div className="flex items-center">
                     <FaReceipt className="mr-4" size={18} />
                     <span>Reports</span>
                   </div>
-                </button>
+                </Link>
               </li>
 
               {/* TRANSACTIONS TOGGLE */}
@@ -196,20 +204,20 @@ const SidebarMenu = () => {
                   }`}
                 >
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/transactions"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
-                      Pending Transactions
-                    </a>
+                      All Transactions
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/admin/refund-requests"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Refund Requests
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>
