@@ -2,9 +2,30 @@ import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState();
+  const location = useLocation();
+
+  const pageTitles = {
+    "/admin": "Dashboard",
+    "/admin/rooms": "Rooms",
+    "/admin/add-room": "Add New Room",
+    "/admin/reservations": "Reservations",
+    "/admin/reservations-history": "Reservation History",
+    "/admin/reservations-calendar": "Reservation Calendar",
+    "/admin/guests": "Guests",
+    "/admin/guests-history": "Guest History",
+    "/admin/guests-feedback": "Guest Feedbacks",
+    "/admin/manage-staff": "Manage Staff",
+    "/admin/reports": "Reports",
+    "/admin/transactions": "Transactions",
+    "/admin/refund-requests": "Refund Requests",
+  };
+
+  // logic and fallback
+  const title = pageTitles[location.pathname] || "Dashboard";
 
   const toggleDropdown = (dropdown) => {
     // so this basically says: is this dropdown already open? if not the drop down eyy
@@ -13,7 +34,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between text-gray-900">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <h1 className="text-2xl font-bold">{title}</h1>
       <div className="relatie profile-icon flex flex-col items-center mr-3">
         <button className="flex mb-4" onClick={toggleDropdown}>
           <FaUserCircle size={28} className="mr-1" />

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import AdminLayout from "./layouts/AdminLayout";
+import AddRoom from "./pages/Admin/AddRoom";
 import Dashboard from "./pages/Admin/Dashboard";
 import Guests from "./pages/Admin/Guests";
 import GuestsHistory from "./pages/Admin/GuestsHistory";
@@ -27,6 +28,7 @@ const App = () => {
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/admin/rooms" element={<Rooms />} />
+        <Route path="/admin/add-room" element={<AddRoom />} />
         <Route path="/admin/reservations" element={<Reservations />} />
         <Route
           path="/admin/reservations-history"
