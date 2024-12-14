@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-section flex flex-col text-gray-900">
       <CardRow />
-      <h3 className="mt-6 mb-3 text-lg">Recent Bookings</h3>
+      <h3 className="mt-6 mb-3 text-lg">Recent Reservations</h3>
       <DashboardTable />
     </div>
   );

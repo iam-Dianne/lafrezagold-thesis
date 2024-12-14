@@ -14,7 +14,6 @@ import Guests from "./pages/Admin/Guests";
 import GuestsHistory from "./pages/Admin/GuestsHistory";
 import GuestsFeedback from "./pages/Admin/GuestsFeedback";
 import ManageStaff from "./pages/Admin/ManageStaff";
-import Reports from "./pages/Admin/Reports";
 import Reservations from "./pages/Admin/Reservations";
 import ReservationsHistory from "./pages/Admin/ReservationsHistory";
 import ReservationsCalendar from "./pages/Admin/ReservationsCalendar";
@@ -42,7 +41,6 @@ const App = () => {
         <Route path="/admin/guests-history" element={<GuestsHistory />} />
         <Route path="/admin/guests-feedback" element={<GuestsFeedback />} />
         <Route path="/admin/manage-staff" element={<ManageStaff />} />
-        <Route path="/admin/reports" element={<Reports />} />
         <Route path="/admin/transactions" element={<Transactions />} />
         <Route path="/admin/refund-requests" element={<RefundRequests />} />
       </Route>

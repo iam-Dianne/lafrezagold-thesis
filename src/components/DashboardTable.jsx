@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 
 const DashboardTable = () => {
   return (
@@ -16,13 +17,15 @@ const DashboardTable = () => {
           <td className="px-4 py-2 border">HOTEL ROOM (4 persons)</td>
           <td className="px-4 py-2 border">December 10, 2024</td>
           <td className="px-4 py-2 border">Booked</td>
-          <td className="px-4 py-2 border">Show More</td>
-        </tr>
-        <tr>
-          <td className="px-4 py-2 border">HOTEL ROOM (6 persons)</td>
-          <td className="px-4 py-2 border">December 12, 2024</td>
-          <td className="px-4 py-2 border">Pending</td>
-          <td className="px-4 py-2 border">Show More</td>
+          <td className="px-4 py-2 border">
+            <div className="flex justify-center">
+              <Button
+                buttonName={"Show more"}
+                buttonColor={"bg-yellow-400"}
+                buttonHoverColor={"hover:bg-yellow-300"}
+              />
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

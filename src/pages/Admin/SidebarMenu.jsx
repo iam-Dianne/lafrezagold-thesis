@@ -196,19 +196,6 @@ const SidebarMenu = () => {
                 </Link>
               </li>
 
-              {/* REPORTS TOGGLE */}
-              <li>
-                <Link
-                  to="/admin/reports"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                >
-                  <div className="flex items-center">
-                    <FaReceipt className="mr-4" size={18} />
-                    <span>Reports</span>
-                  </div>
-                </Link>
-              </li>
-
               {/* TRANSACTIONS TOGGLE */}
               <li>
                 <button
