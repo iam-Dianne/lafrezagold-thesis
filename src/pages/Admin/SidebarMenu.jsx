@@ -52,36 +52,36 @@ const SidebarMenu = () => {
                 <button
                   type="button"
                   className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-7 cursor-pointer"
-                  onClick={() => toggleDropdown("rooms")}
-                  aria-expanded={activeDropdown === "rooms"}
-                  aria-controls="dropdown-rooms"
+                  onClick={() => toggleDropdown("accomodations")}
+                  aria-expanded={activeDropdown === "accomodations"}
+                  aria-controls="dropdown-accomodations"
                 >
                   <div className="flex items-center">
                     <FaDoorClosed className="mr-4" size={18} />
-                    <span>Rooms</span>
+                    <span>Accomodations</span>
                   </div>
                   <RiArrowDropDownLine size={28} className="items-center" />
                 </button>
                 <ul
                   id="dropdown-rooms"
                   className={`${
-                    activeDropdown === "rooms" ? "block" : "hidden"
+                    activeDropdown === "accomodations" ? "block" : "hidden"
                   }`}
                 >
                   <li>
                     <Link
-                      to="/admin/rooms"
+                      to="/admin/accomodations"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
-                      All Rooms
+                      All Accomodations
                     </Link>
                   </li>
                   <li>
                     <Link
-                      to="/admin/add-room"
+                      to="/admin/add-accomodations"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
-                      Add Room
+                      Add Accomodation
                     </Link>
                   </li>
                 </ul>

@@ -27,8 +27,8 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="/admin/rooms" element={<Rooms />} />
-        <Route path="/admin/add-room" element={<AddRoom />} />
+        <Route path="/admin/accomodations" element={<Rooms />} />
+        <Route path="/admin/add-accomodations" element={<AddRoom />} />
         <Route path="/admin/reservations" element={<Reservations />} />
         <Route
           path="/admin/reservations-history"

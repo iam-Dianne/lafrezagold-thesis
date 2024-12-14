@@ -2,12 +2,11 @@ import React from "react";
 import CardSmall from "./CardSmall";
 import { FaDoorClosed } from "react-icons/fa6";
 import { FaDoorOpen } from "react-icons/fa6";
-import { FaBellConcierge } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa6";
 
 const CardRow = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 gap-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <CardSmall
         cardTitle={"Available Rooms"}
         cardCount={28}
