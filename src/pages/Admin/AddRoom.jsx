@@ -81,7 +81,11 @@ const AddRoom = () => {
             <input type="file" multiple name="files[]" />
           </section>
           <div className="flex justify-center">
-            <Button buttonName={"Add Accomodation"} />
+            <Button
+              buttonName={"Add Accomodation"}
+              buttonColor={"bg-yellow-400"}
+              buttonHoverColor={"hover:bg-yellow-300"}
+            />
           </div>
         </form>
       </div>
