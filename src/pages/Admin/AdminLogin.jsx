@@ -25,7 +25,7 @@ const AdminLogin = () => {
                 type="text"
                 id="admin-username"
                 name="admin-username"
-                placeholder="username"
+                placeholder="Username"
                 required
                 className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
               />
@@ -36,7 +36,7 @@ const AdminLogin = () => {
                 type="password"
                 id="admin-password"
                 name="admin-password"
-                placeholder="password"
+                placeholder="Password"
                 required
                 className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
               />
