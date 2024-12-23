@@ -1,9 +1,22 @@
 import React from "react";
 import Button from "../../components/Button";
 import "../../App.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const AdminLogin = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const message = params.get("message");
+    if (message) {
+      toast.success(message);
+    }
+  }, [location]);
+
   return (
     <div className="login-card flex justify-center items-center h-screen w-full background-container">
       <div className="rounded-lg text-gray-900 bg-gray-50 shadow-lg h-2/3 w-96 py-7 px-6 flex flex-col justify-between">

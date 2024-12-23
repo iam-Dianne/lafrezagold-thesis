@@ -22,6 +22,9 @@ import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
 import AdminSignup from "./pages/Admin/AdminSignup";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -53,7 +56,12 @@ const App = () => {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 };
 
 export default App;

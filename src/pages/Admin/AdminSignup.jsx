@@ -1,11 +1,83 @@
 import React from "react";
 import Button from "../../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// ALL THIS IS JUST FOR VALIDATION SCHEMA
+const schema = yup
+  .object()
+  .shape({
+    firstName: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
+    username: yup.string().required("Username is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .matches(/[a-zA-Z]/, "Password must contain at least one letter")
+      .matches(/\d/, "Password must contain at least one number")
+      .required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password"),
+  })
+  .required();
 
 const AdminSignup = () => {
+  // handles the form state and validation
+  // register - binds all inputs; handleSubmit - function to handle submition
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const navigate = useNavigate();
+
+  // handle form submission
+  const onSubmit = async (data) => {
+    console.log("Form submitted", data);
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/admin_signup.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        }
+      );
+      console.log("Response received:", response);
+
+      const result = await response.json();
+      console.log("Server response:", result);
+
+      if (result.success) {
+        toast.success(result.message);
+        return navigate("/admin-login");
+        // navigate(`/admin-login?message=${encodeURIComponent(result.message)}`);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast.error("An error occured when creating an account");
+    }
+  };
+
   return (
-    <div className="login-card flex justify-center items-center h-screen w-full background-container">
-      <div className="rounded-lg text-gray-900 bg-gray-50 shadow-lg py-7 px-6 flex flex-col justify-between sm:w-[600px] xs:w-[400px]">
+    <div className="login-card flex justify-center items-center w-full background-container py-10">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-lg text-gray-900 bg-gray-50 shadow-lg py-7 px-6 flex flex-col justify-between sm:w-[600px] xs:w-[400px]"
+      >
         <div className="content flex flex-col">
           <div className="flex items-center flex-col mb-10">
             <h1 className="mb-1 font-bold text-xl">Admin Signup</h1>
@@ -20,76 +92,100 @@ const AdminSignup = () => {
           <div className="admin-fullname">
             <div className="flex gap-4">
               <div className="mb-4 flex flex-col w-2/3">
-                <label htmlFor="admin-first-name">First Name</label>
+                <label htmlFor="firstName">First Name</label>
                 <input
                   type="text"
-                  id="admin-first-name"
-                  name="admin-first-name"
+                  id="firstName"
+                  name="firstName"
                   placeholder="First Name"
-                  required
+                  {...register("firstName")}
                   className="rounded py-2 px-3 bg-gray-200 text-gray-900"
                 />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div className="mb-4 flex flex-col w-1/3">
-                <label htmlFor="admin-last-name">Last Name</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   type="text"
-                  id="admin-last-name"
-                  name="admin-last-name"
+                  id="lastName"
+                  name="lastName"
                   placeholder="Last Name"
-                  required
+                  {...register("lastName")}
                   className="rounded py-2 px-3 bg-gray-200 text-gray-900"
                 />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
           <div className="mb-4 flex flex-col">
-            <label htmlFor="signup-admin-username">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
-              id="signup-admin-username"
-              name="signup-admin-username"
+              id="username"
+              name="username"
               placeholder="Username"
-              required
+              {...register("username")}
               className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
             />
+            {errors.username && (
+              <p className="text-red-500 text-sm">{errors.username.message}</p>
+            )}
           </div>
           <div className="mb-4 flex flex-col">
-            <label htmlFor="signup-admin-email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
-              id="signup-admin-email"
-              name="signup-admin-email"
+              id="email"
+              name="email"
               placeholder="Email"
-              required
+              {...register("email")}
               className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
-          <div className="admin-password">
+          <div className="password">
             <div className="flex gap-4">
               <div className="mb-4 flex flex-col w-1/2">
-                <label htmlFor="signup-admin-password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
-                  id="signup-admin-password"
-                  name="signup-admin-password"
+                  id="password"
+                  name="password"
                   placeholder="Password"
-                  required
+                  {...register("password")}
                   className="rounded py-2 px-3 bg-gray-200 text-gray-900"
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div className="mb-4 flex flex-col w-1/2">
-                <label htmlFor="signup-admin-confirm-password">
-                  Confirm Password
-                </label>
+                <label htmlFor="confirmPassword">Confirm Password</label>
                 <input
                   type="password"
-                  id="signup-admin-confirm-password"
-                  name="signup-admin-confirm-password"
+                  id="confirmPassword"
+                  name="confirmPassword"
                   placeholder="Confirm Password"
-                  required
+                  {...register("confirmPassword")}
                   className="rounded py-2 px-3 bg-gray-200 text-gray-900"
                 />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -102,7 +198,7 @@ const AdminSignup = () => {
             buttonWidth={"w-full"}
           />
         </div>
-      </div>
+      </form>
     </div>
   );
 };
