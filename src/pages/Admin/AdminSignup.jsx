@@ -43,7 +43,7 @@ const AdminSignup = () => {
 
   // handle form submission
   const onSubmit = async (data) => {
-    console.log("Form submitted", data);
+    // console.log("Form submitted", data);
     try {
       const response = await fetch(
         "http://localhost/lafreza-server/admin/admin_signup.php",
@@ -54,15 +54,12 @@ const AdminSignup = () => {
           credentials: "include",
         }
       );
-      console.log("Response received:", response);
 
       const result = await response.json();
-      console.log("Server response:", result);
 
       if (result.success) {
         toast.success(result.message);
         return navigate("/admin-login");
-        // navigate(`/admin-login?message=${encodeURIComponent(result.message)}`);
       } else {
         toast.error(result.message);
       }

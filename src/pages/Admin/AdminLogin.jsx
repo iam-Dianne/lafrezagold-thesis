@@ -1,25 +1,66 @@
 import React from "react";
 import Button from "../../components/Button";
 import "../../App.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useState } from "react";
+
+const schema = yup
+  .object()
+  .shape({
+    username: yup.string().required("Username is reqired"),
+    password: yup.string().required("Password is required"),
+  })
+  .required();
 
 const AdminLogin = () => {
-  const location = useLocation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const message = params.get("message");
-    if (message) {
-      toast.success(message);
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("  ");
+
+  const onSubmit = async (data) => {
+    // console.log("Logged in", data);
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/admin_login.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        }
+      );
+      const result = await response.json();
+
+      console.log("Server response: ", result);
+
+      if (result.success) {
+        toast.success(result.message);
+        return navigate("/admin");
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch (error) {
+      console.log("An error occured: ", error);
+      setErrorMessage("An unexpected error occured. Please try again later.");
     }
-  }, [location]);
+  };
 
   return (
     <div className="login-card flex justify-center items-center h-screen w-full background-container">
-      <div className="rounded-lg text-gray-900 bg-gray-50 shadow-lg h-2/3 w-96 py-7 px-6 flex flex-col justify-between">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-lg text-gray-900 bg-gray-50 shadow-lg h-2/3 w-96 py-7 px-6 flex flex-col justify-between"
+      >
         <div className="content">
           <div className="flex items-center flex-col mb-10">
             <h1 className="mb-1 font-bold text-xl">Admin Log-in</h1>
@@ -31,28 +72,41 @@ const AdminLogin = () => {
               for a new admin account
             </p>
           </div>
+          {errorMessage && (
+            <div className="text-red-500 text-sm">{errorMessage}</div>
+          )}
           <div>
             <div className="mb-4">
-              <label htmlFor="admin-username">Enter username</label>
+              <label htmlFor="username">Enter username</label>
               <input
                 type="text"
-                id="admin-username"
-                name="admin-username"
+                id="username"
+                name="username"
                 placeholder="Username"
-                required
+                {...register("username")}
                 className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
               />
+              {errors.username && (
+                <p className="text-red-500 text-sm">
+                  {errors.username.message}
+                </p>
+              )}
             </div>
             <div className="mb-4">
-              <label htmlFor="admin-password">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
-                id="admin-password"
-                name="admin-password"
+                id="password"
+                name="password"
                 placeholder="Password"
-                required
+                {...register("password")}
                 className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             <div className="flex justify-end">
               <a href="" className="text-yellow-400 underline text-sm">
@@ -69,7 +123,7 @@ const AdminLogin = () => {
             buttonWidth={"w-full"}
           />
         </div>
-      </div>
+      </form>
     </div>
   );
 };
