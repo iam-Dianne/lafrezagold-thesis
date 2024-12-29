@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-const FeatureInput = () => {
-  const [features, setFeatures] = useState([]); // store list of features
+const FeatureInput = ({ setValue, featuresField }) => {
+  const [features, setFeatures] = useState(featuresField || []); // Initialize with existing features or empty array
   const [inputValue, setInputValue] = useState(""); // store current input
 
   // function to add new feature
@@ -13,7 +13,7 @@ const FeatureInput = () => {
       setFeatures(updatedFeatures);
       setInputValue("");
 
-      console.log(updatedFeatures);
+      setValue("features", updatedFeatures);
     }
   };
 
@@ -30,7 +30,7 @@ const FeatureInput = () => {
     const updatedFeatures = features.filter((_, i) => i !== index); // get index
     setFeatures(updatedFeatures); // update state
 
-    console.log(updatedFeatures);
+    setValue("features", updatedFeatures);
   };
 
   return (
@@ -44,7 +44,6 @@ const FeatureInput = () => {
           id="acc-feature"
           name="acc-feature"
           placeholder="eg. 2 single beds"
-          required
           className="border rounded py-2 px-3 focus:border-gray-400 w-full"
         />
       </div>
