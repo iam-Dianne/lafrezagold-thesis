@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   FaHouse,
   FaDoorClosed,
@@ -16,6 +17,31 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 
 const SidebarMenu = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/admin_logout.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(),
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message);
+        navigate("/admin-login");
+      }
+    } catch (error) {
+      console.log("Logout failed: ", error);
+    }
+  };
+
   const [activeDropdown, setActiveDropdown] = useState("");
 
   // setActiveDropdown naguupdate ng activeDropdown state and keeps track if it is currently active or nah
@@ -240,6 +266,7 @@ const SidebarMenu = () => {
 
           <div className="profile-menu">
             <button
+              onClick={handleLogout}
               type="button"
               className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
             >

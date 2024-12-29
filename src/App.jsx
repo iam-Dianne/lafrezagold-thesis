@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminLayout from "./layouts/AdminLayout";
 import AddRoom from "./pages/Admin/AddRoom";
@@ -32,7 +33,14 @@ const App = () => {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignup />} />
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="/admin/accomodations" element={<Rooms />} />
           <Route path="/admin/add-accomodations" element={<AddRoom />} />
