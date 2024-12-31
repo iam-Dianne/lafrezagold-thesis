@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import FeatureInput from "../../components/FeatureInput";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const schema = yup
   .object()
@@ -35,25 +36,55 @@ const AddRoom = () => {
 
   // const navigate = useNavigate();
 
+  const [images, setImages] = useState([]);
+
+  const handleFileChange = (e) => {
+    setImages([...e.target.files]); // Update state with selected files
+  };
+
   const onSubmit = async (data) => {
     const { name, type, features, capacity, price } = data;
+    console.log("data:", data);
 
-    const formData = {
-      name,
-      type,
-      features: features.join(", "),
-      capacity,
-      price,
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("type", type);
 
-    await fetch("http://localhost/lafreza-server/admin/add_accomodations.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-      credentials: "include",
+    const featuresString = (features || []).join(", ");
+    formData.append("features", featuresString);
+    formData.append("capacity", capacity);
+    formData.append("price", price);
+
+    images.forEach((image) => {
+      formData.append("images[]", image);
     });
 
-    console.log("Form submitted: ", formData);
+    // log form data individually
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/add_accomodations.php",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
+
+      const result = await response.text();
+      console.log("Server response:", result);
+
+      if (result.success) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred: ", error);
+    }
   };
 
   return (
@@ -61,6 +92,7 @@ const AddRoom = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="container text-gray-900"
+        encType="multipart/form-data"
       >
         <section className="flex mb-4">
           <div className="name w-2/3">
@@ -142,7 +174,13 @@ const AddRoom = () => {
           <label htmlFor="images" className="block text-lg pb-1">
             Upload images:
           </label>
-          <input id="images" type="file" multiple name="files[]" />
+          <input
+            id="images"
+            type="file"
+            name="images[]"
+            multiple
+            onChange={handleFileChange}
+          />
         </section>
         <div className="flex justify-center">
           <Button
