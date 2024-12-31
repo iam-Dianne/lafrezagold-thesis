@@ -19,11 +19,12 @@ const ProtectedRoute = ({ children }) => {
           }
         );
 
-        const result = await response.json();
-
-        if (result.success) {
+        if (response.ok) {
+          // If the response is OK, assume authentication is successful
           setIsAuthenticated(true);
         } else {
+          // If not OK, parse the JSON for the error message
+          const result = await response.json();
           setIsAuthenticated(false);
           navigate("/admin-login", { replace: true });
         }

@@ -34,7 +34,7 @@ const AddRoom = () => {
     resolver: yupResolver(schema),
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [images, setImages] = useState([]);
 
@@ -74,10 +74,11 @@ const AddRoom = () => {
         }
       );
 
-      const result = await response.text();
+      const result = await response.json();
       console.log("Server response:", result);
 
       if (result.success) {
+        navigate("/admin/accomodations");
         toast.success(result.message);
       } else {
         toast.error(result.message);
