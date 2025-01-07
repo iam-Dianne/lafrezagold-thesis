@@ -25,6 +25,7 @@ import AdminSignup from "./pages/Admin/AdminSignup";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AccommodationPage from "./pages/Admin/AccommodationPage";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -43,6 +44,10 @@ const App = () => {
         >
           <Route index element={<Dashboard />} />
           <Route path="/admin/accomodations" element={<Rooms />} />
+          <Route
+            path="/admin/accommodation/:id"
+            element={<AccommodationPage />}
+          />
           <Route path="/admin/add-accomodations" element={<AddRoom />} />
           <Route path="/admin/reservations" element={<Reservations />} />
           <Route

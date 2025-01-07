@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 
@@ -20,8 +20,6 @@ const AccomodationsTable = () => {
           }
         );
         const result = await response.json();
-
-        console.log(accommodations);
 
         if (response.ok) {
           const sortedData = result.data.sort((a, b) => a.id - b.id);
@@ -71,12 +69,12 @@ const AccomodationsTable = () => {
             </td>
             <td className="w-1/5 py-1 px-2">
               <div className="flex justify-center gap-2 ">
-                <a
-                  href={`/admin/accommodation/${accommodation.id}`}
+                <Link
+                  to={`/admin/accommodation/${accommodation.id}`}
                   className="rounded-lg py-2 px-5 text-gray-900 bg-yellow-400 hover:bg-yellow-300"
                 >
                   Show more
-                </a>
+                </Link>
               </div>
             </td>
           </tr>

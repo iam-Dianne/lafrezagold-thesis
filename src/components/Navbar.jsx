@@ -11,6 +11,7 @@ const Navbar = () => {
   const pageTitles = {
     "/admin": "Dashboard",
     "/admin/accomodations": "Accomodations",
+    "/admin/accomodation/:id": "",
     "/admin/add-accomodations": "Add Accomodation",
     "/admin/reservations": "Reservations",
     "/admin/reservations-history": "Reservation History",
@@ -25,7 +26,7 @@ const Navbar = () => {
   };
 
   // logic and fallback
-  const title = pageTitles[location.pathname] || "Dashboard";
+  const title = pageTitles[location.pathname];
 
   const toggleDropdown = (dropdown) => {
     // so this basically says: is this dropdown already open? if not the drop down eyy
@@ -33,7 +34,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between text-gray-900">
+    <div className="flex justify-between text-gray-900 h-10">
       <h1 className="text-2xl font-bold">{title}</h1>
       <div className="relatie profile-icon flex flex-col items-center mr-3">
         <button className="flex mb-4" onClick={toggleDropdown}>

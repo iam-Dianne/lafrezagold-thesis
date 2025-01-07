@@ -6,7 +6,7 @@ import ContentCanvas from "../components/ContentCanvas";
 
 const AdminLayout = () => {
   return (
-    <div className="flex bg-gray-200">
+    <div className="flex bg-gray-200 h-screen">
       <SidebarMenu />
       <ContentCanvas>
         <Navbar />
