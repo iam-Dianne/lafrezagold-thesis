@@ -1,11 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../../components/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ConfirmAlert from "../../components/ConfirmAlert";
 
 // Import Swiper styles
 import "swiper/css";
@@ -19,8 +22,12 @@ const AccommodationPage = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Accommodation ID:", id);
     const fetchAccommodation = async () => {
       try {
         const response = await fetch(
@@ -55,6 +62,46 @@ const AccommodationPage = () => {
     fetchAccommodation();
   }, [id]);
 
+  const handleDeleteClick = () => {
+    setShowConfirm(true);
+  };
+
+  const handleConfirm = async () => {
+    setShowConfirm(false);
+    await deleteAccommodation();
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
+
+  const deleteAccommodation = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/delete_accommodation.php",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id }),
+          credentials: "include",
+        }
+      );
+      const result = await response.json();
+      console.log("Response:", result);
+
+      if (response.ok && result.success) {
+        toast.success("Accommodation deleted successfully");
+        return navigate("/admin/accomodations");
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch (error) {
+      console.log("An error occured: ", error);
+      setErrorMessage("An unexpected error occured. Please try again later.");
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -74,6 +121,7 @@ const AccommodationPage = () => {
         <div className="flex justify-center ">
           <div className="images-carousel w-[380px] h-[230px]">
             <Swiper
+              style={{ zIndex: 0 }}
               spaceBetween={5}
               slidesPerView={1}
               loop={true}
@@ -134,7 +182,16 @@ const AccommodationPage = () => {
           buttonColor={"bg-red-600"}
           buttonHoverColor={"hover:bg-red-500"}
           buttonWidth={"w-1/3"}
+          onClickFunction={handleDeleteClick}
         />
+
+        {showConfirm && (
+          <ConfirmAlert
+            message="Are you sure you want to delete this accommodation? This action cannot be undone."
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
     </div>
   );
