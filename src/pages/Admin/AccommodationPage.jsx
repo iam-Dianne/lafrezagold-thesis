@@ -27,7 +27,7 @@ const AccommodationPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Accommodation ID:", id);
+    // console.log("Accommodation ID:", id);
     const fetchAccommodation = async () => {
       try {
         const response = await fetch(
@@ -41,7 +41,7 @@ const AccommodationPage = () => {
         const result = await response.json();
 
         if (response.ok && result.success) {
-          console.log(result.data);
+          // console.log(result.data);
           setAccommodation(result.data.accommodation);
           setImages(result.data.images);
           setLoading(false);
@@ -176,6 +176,9 @@ const AccommodationPage = () => {
           buttonColor={"bg-blue-600"}
           buttonHoverColor={"hover:bg-blue-500"}
           buttonWidth={"w-1/3"}
+          onClickFunction={() => {
+            navigate(`/admin/edit-accommodations/${accommodation.id}`);
+          }}
         />
         <Button
           buttonName={"Delete"}

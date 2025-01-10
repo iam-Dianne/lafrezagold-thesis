@@ -9,11 +9,6 @@ const Dashboard = () => {
       <CardRow />
       <h3 className="mt-6 mb-3 text-lg">Recent Reservations</h3>
       <DashboardTable />
-      <ConfirmAlert
-        confrmationMessage={
-          "Are you sure you want to delete this accommodation?"
-        }
-      />
     </div>
   );
 };

@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 const FeatureInput = ({ setValue, featuresField }) => {
   const [features, setFeatures] = useState(featuresField || []); // Initialize with existing features or empty array
-  const [inputValue, setInputValue] = useState(""); // store current input
+  const [inputValue, setInputValue] = useState("");
 
-  // function to add new feature
+  useEffect(() => {
+    setFeatures(featuresField || []);
+  }, [featuresField]);
+
   const addFeature = () => {
     //checks to see if empty or existing
     if (inputValue.trim() && !features.includes(inputValue)) {
-      const updatedFeatures = [...features, inputValue]; // adding new feature to list
+      const updatedFeatures = [...features, inputValue];
       setFeatures(updatedFeatures);
       setInputValue("");
 
       setValue("features", updatedFeatures);
+      console.log("Updated features state:", updatedFeatures);
     }
   };
 
@@ -28,7 +32,7 @@ const FeatureInput = ({ setValue, featuresField }) => {
   // remove
   const handleRemove = (index) => {
     const updatedFeatures = features.filter((_, i) => i !== index); // get index
-    setFeatures(updatedFeatures); // update state
+    setFeatures(updatedFeatures);
 
     setValue("features", updatedFeatures);
   };
@@ -38,7 +42,7 @@ const FeatureInput = ({ setValue, featuresField }) => {
       <div className="field flex mb-2">
         <input
           type="text"
-          value={inputValue} // bind to state
+          value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           id="acc-feature"
@@ -48,21 +52,23 @@ const FeatureInput = ({ setValue, featuresField }) => {
         />
       </div>
       <ul className="flex flex-wrap">
-        {features.map((feature, index) => (
-          <li
-            key={index}
-            className="border rounded-lg bg-gray-300 py-1 px-2 items-center mr-2 mb-1"
-          >
-            {feature}
-            <button
-              type="Button"
-              onClick={() => handleRemove(index)}
-              className="rounded-3xl bg-gray-700 px-2 text-gray-100 ml-3 text-xs"
+        {features &&
+          features.length > 0 &&
+          features.map((feature, index) => (
+            <li
+              key={index}
+              className="border rounded-lg bg-gray-300 py-1 px-2 items-center mr-2 mb-1"
             >
-              x
-            </button>
-          </li>
-        ))}
+              {feature}
+              <button
+                type="Button"
+                onClick={() => handleRemove(index)}
+                className="rounded-3xl bg-gray-700 px-2 text-gray-100 ml-3 text-xs"
+              >
+                x
+              </button>
+            </li>
+          ))}
       </ul>
     </div>
   );

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FeatureInput from "../../components/FeatureInput";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Spinner from "../../components/Spinner";
 
 const schema = yup
   .object()
@@ -23,7 +24,15 @@ const schema = yup
   })
   .required();
 
-const AddRoom = () => {
+const EditAccommodation = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+  const [accommodation, setAccommodation] = useState(null);
+  const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+
   const {
     register,
     handleSubmit,
@@ -34,15 +43,69 @@ const AddRoom = () => {
     resolver: yupResolver(schema),
   });
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchAccommodation = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost/lafreza-server/admin/fetch_single_accomodation.php?id=${id}`,
+          {
+            credentials: "include",
+          }
+        );
 
-  const [images, setImages] = useState([]);
+        const result = await response.json();
+        // console.log(result);
+
+        if (result.success) {
+          const {
+            accomodation_name,
+            accomodation_type,
+            features,
+            capacity,
+            price,
+          } = result.data.accommodation;
+
+          setValue("name", accomodation_name);
+          setValue("type", accomodation_type);
+          setValue("capacity", capacity);
+          setValue("price", price);
+
+          const featuresArray = features
+            ? features.split(",").map((feature) => feature.trim())
+            : [];
+          setValue("features", featuresArray); // Set the features array for useForm
+
+          setExistingImages(result.data.images || []);
+          console.log("Accommodation data set:", {
+            name: accomodation_name,
+            type: accomodation_type,
+            capacity,
+            price,
+          });
+
+          console.log("Fetched accommodation data:", result.data.accommodation);
+
+          //   setAccommodation(result.data.accommodation);
+          //   setImages(result.data.images);
+          //   setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching accommodation:", error);
+      }
+    };
+    fetchAccommodation();
+  }, [id, setValue]);
 
   const handleFileChange = (e) => {
     setImages([...e.target.files]);
   };
 
   const onSubmit = async (data) => {
+    console.log("Form values before submission:", data);
+    if (loading) {
+      return <Spinner />;
+    }
+
     const { name, type, features, capacity, price } = data;
     console.log("data:", data);
 
@@ -55,18 +118,14 @@ const AddRoom = () => {
     formData.append("capacity", capacity);
     formData.append("price", price);
 
-    images.forEach((image) => {
-      formData.append("images[]", image);
-    });
-
-    // log form data individually
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
+    // // log form data individually
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ": " + pair[1]);
+    // }
 
     try {
       const response = await fetch(
-        "http://localhost/lafreza-server/admin/add_accomodations.php",
+        "http://localhost/lafreza-server/admin/edit_accommodation.php",
         {
           method: "POST",
           body: formData,
@@ -75,16 +134,16 @@ const AddRoom = () => {
       );
 
       const result = await response.json();
-      console.log("Server response:", result);
+      console.log(result);
 
       if (result.success) {
-        navigate("/admin/accomodations");
+        navigate("/admin/accommodation/${id}");
         toast.success(result.message);
       } else {
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("An error occurred: ", error);
+      console.log("An error occured: ", error);
     }
   };
 
@@ -185,7 +244,7 @@ const AddRoom = () => {
         </section>
         <div className="flex justify-center">
           <Button
-            buttonName={"Add Accomodation"}
+            buttonName={"Update Accomodation"}
             buttonColor={"bg-yellow-400"}
             buttonHoverColor={"hover:bg-yellow-300"}
           />
@@ -195,4 +254,4 @@ const AddRoom = () => {
   );
 };
 
-export default AddRoom;
+export default EditAccommodation;
