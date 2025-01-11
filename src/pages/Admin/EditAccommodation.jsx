@@ -29,8 +29,7 @@ const EditAccommodation = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [accommodation, setAccommodation] = useState(null);
-  const [images, setImages] = useState([]);
+
   const [existingImages, setExistingImages] = useState([]);
 
   const {
@@ -54,9 +53,9 @@ const EditAccommodation = () => {
         );
 
         const result = await response.json();
-        // console.log(result);
+        console.log("Fetch result:", result);
 
-        if (result.success) {
+        if (result.success && result.data.accommodation) {
           const {
             accomodation_name,
             accomodation_type,
@@ -76,12 +75,6 @@ const EditAccommodation = () => {
           setValue("features", featuresArray); // Set the features array for useForm
 
           setExistingImages(result.data.images || []);
-          console.log("Accommodation data set:", {
-            name: accomodation_name,
-            type: accomodation_type,
-            capacity,
-            price,
-          });
 
           console.log("Fetched accommodation data:", result.data.accommodation);
 
@@ -96,20 +89,19 @@ const EditAccommodation = () => {
     fetchAccommodation();
   }, [id, setValue]);
 
+  const [images, setImages] = useState([]);
   const handleFileChange = (e) => {
     setImages([...e.target.files]);
   };
 
   const onSubmit = async (data) => {
     console.log("Form values before submission:", data);
-    if (loading) {
-      return <Spinner />;
-    }
 
     const { name, type, features, capacity, price } = data;
     console.log("data:", data);
 
     const formData = new FormData();
+    formData.append("id", id);
     formData.append("name", name);
     formData.append("type", type);
 
@@ -118,10 +110,9 @@ const EditAccommodation = () => {
     formData.append("capacity", capacity);
     formData.append("price", price);
 
-    // // log form data individually
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ": " + pair[1]);
-    // }
+    images.forEach((image) => {
+      formData.append("images[]", image);
+    });
 
     try {
       const response = await fetch(
@@ -134,10 +125,10 @@ const EditAccommodation = () => {
       );
 
       const result = await response.json();
-      console.log(result);
+      console.log("Server response:", result);
 
       if (result.success) {
-        navigate("/admin/accommodation/${id}");
+        navigate(`/admin/accommodation/${id}`);
         toast.success(result.message);
       } else {
         toast.error(result.message);
