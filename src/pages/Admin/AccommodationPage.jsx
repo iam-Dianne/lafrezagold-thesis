@@ -16,13 +16,14 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 
-const AccommodationPage = () => {
+const AccommodationPage = ({ initialStatus }) => {
   const { id } = useParams();
   const [accommodation, setAccommodation] = useState(null);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [status, setStatus] = useState(initialStatus);
 
   const navigate = useNavigate();
 
@@ -44,6 +45,7 @@ const AccommodationPage = () => {
           // console.log(result.data);
           setAccommodation(result.data.accommodation);
           setImages(result.data.images);
+          setStatus(result.data.accommodation.availability);
           setLoading(false);
         } else {
           setErrorMessage(
@@ -73,6 +75,33 @@ const AccommodationPage = () => {
 
   const handleCancel = () => {
     setShowConfirm(false);
+  };
+
+  const changeStatus = async () => {
+    const newStatus = status === "Available" ? "Booked" : "Available";
+
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/update_status.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, status: newStatus }),
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+      console.log("Server response: ", result);
+
+      if (response.ok && result.success) {
+        setStatus(newStatus);
+      } else {
+        toast.error(result.message || "Failed to update status");
+      }
+    } catch (error) {
+      console.log("Error updating status: ", error);
+    }
   };
 
   const deleteAccommodation = async () => {
@@ -162,9 +191,18 @@ const AccommodationPage = () => {
                 {accommodation.price}
               </li>
               <li className="mt-5">
-                <span className="rounded py-1 px-4 text-gray-900 bg-yellow-300">
-                  {accommodation.availability}
-                </span>
+                <Button
+                  buttonName={status === "Available" ? "Available" : "Booked"}
+                  buttonColor={
+                    status === "Available" ? "bg-yellow-300" : "bg-blue-400"
+                  }
+                  buttonHoverColor={
+                    status === "Available"
+                      ? "hover:bg-yellow-200"
+                      : "hover:bg-blue-300"
+                  }
+                  onClickFunction={changeStatus}
+                />
               </li>
             </ul>
           </div>

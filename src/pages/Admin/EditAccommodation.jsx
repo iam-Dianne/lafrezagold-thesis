@@ -7,6 +7,8 @@ import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../../components/Spinner";
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const schema = yup
   .object()
@@ -139,10 +141,15 @@ const EditAccommodation = () => {
   };
 
   return (
-    <section className="w-2/5 mx-auto py-4 mb-4">
+    <section className="">
+      <div className="back-container">
+        <Link to={`/admin/accommodation/${id}`} className="flex items-center">
+          <FaArrowLeft className="mr-2" /> Back
+        </Link>
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="container text-gray-900"
+        className="container text-gray-900 w-2/5 mx-auto py-4 mb-4"
         encType="multipart/form-data"
       >
         <section className="flex mb-4">
