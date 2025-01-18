@@ -12,6 +12,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import AddRoom from "./pages/Admin/AddRoom";
 import Dashboard from "./pages/Admin/Dashboard";
 import Guests from "./pages/Admin/Guests";
+import GuestPage from "./pages/Admin/GuestPage";
 import GuestsHistory from "./pages/Admin/GuestsHistory";
 import GuestsFeedback from "./pages/Admin/GuestsFeedback";
 import ManageStaff from "./pages/Admin/ManageStaff";
@@ -19,15 +20,14 @@ import Reservations from "./pages/Admin/Reservations";
 import ReservationsHistory from "./pages/Admin/ReservationsHistory";
 import ReservationsCalendar from "./pages/Admin/ReservationsCalendar";
 import Rooms from "./pages/Admin/Rooms";
+import AccommodationPage from "./pages/Admin/AccommodationPage";
+import EditAccommodation from "./pages/Admin/EditAccommodation";
 import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
 import AdminSignup from "./pages/Admin/AdminSignup";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AccommodationPage from "./pages/Admin/AccommodationPage";
-import EditAccommodation from "./pages/Admin/EditAccommodation";
-
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -64,6 +64,7 @@ const App = () => {
             element={<ReservationsCalendar />}
           />
           <Route path="/admin/guests" element={<Guests />} />
+          <Route path="/admin/guest/:id" element={<GuestPage />} />
           <Route path="/admin/guests-history" element={<GuestsHistory />} />
           <Route path="/admin/guests-feedback" element={<GuestsFeedback />} />
           <Route path="/admin/manage-staff" element={<ManageStaff />} />

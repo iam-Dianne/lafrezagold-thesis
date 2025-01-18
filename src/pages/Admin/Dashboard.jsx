@@ -1,7 +1,6 @@
 import React from "react";
-import CardRow from "../../components/CardRow";
-import DashboardTable from "../../components/DashboardTable";
-import ConfirmAlert from "../../components/ConfirmAlert";
+import CardRow from "../../components/Admin/CardRow";
+import DashboardTable from "../../components/Admin/DashboardTable";
 
 const Dashboard = () => {
   return (

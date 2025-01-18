@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FeatureInput from "../../components/FeatureInput";
+import FeatureInput from "../../components/Admin/FeatureInput";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -113,6 +113,46 @@ const SidebarMenu = () => {
                 </ul>
               </li>
 
+              {/* GUESTS TOGGLE */}
+              <li>
+                <button
+                  type="button"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
+                  onClick={() => toggleDropdown("guests")}
+                  aria-expanded={activeDropdown === "guests"}
+                  aria-controls="dropdown-guests"
+                >
+                  <div className="flex items-center">
+                    <FaUser className="mr-4" size={18} />
+                    <span>Guests</span>
+                  </div>
+                  <RiArrowDropDownLine size={28} className="items-center" />
+                </button>
+                <ul
+                  id="dropdown-guests"
+                  className={`${
+                    activeDropdown === "guests" ? "block" : "hidden"
+                  }`}
+                >
+                  <li>
+                    <Link
+                      to="/admin/guests"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
+                    >
+                      All Guests
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/admin/guests-feedback"
+                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
+                    >
+                      Guest Feedback
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+
               {/* RESERVATIONS TOGGLE */}
               <li>
                 <button
@@ -156,54 +196,6 @@ const SidebarMenu = () => {
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Calendar
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* GUESTS TOGGLE */}
-              <li>
-                <button
-                  type="button"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                  onClick={() => toggleDropdown("guests")}
-                  aria-expanded={activeDropdown === "guests"}
-                  aria-controls="dropdown-guests"
-                >
-                  <div className="flex items-center">
-                    <FaUser className="mr-4" size={18} />
-                    <span>Guests</span>
-                  </div>
-                  <RiArrowDropDownLine size={28} className="items-center" />
-                </button>
-                <ul
-                  id="dropdown-guests"
-                  className={`${
-                    activeDropdown === "guests" ? "block" : "hidden"
-                  }`}
-                >
-                  <li>
-                    <Link
-                      to="/admin/guests"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
-                    >
-                      All Guests
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/admin/guests-history"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
-                    >
-                      Guest History
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/admin/guests-feedback"
-                      className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
-                    >
-                      Guest Feedback
                     </Link>
                   </li>
                 </ul>

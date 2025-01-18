@@ -1,6 +1,6 @@
 import React from "react";
 import { FaFilter } from "react-icons/fa6";
-import AccomodationsTable from "../../components/AccomodationsTable";
+import AccomodationsTable from "../../components/Admin/AccomodationsTable";
 
 const Rooms = () => {
   return (

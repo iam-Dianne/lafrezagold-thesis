@@ -1,5 +1,5 @@
 import React from "react";
-import CardSmall from "./CardSmall";
+import CardSmall from "../CardSmall";
 import { FaDoorClosed } from "react-icons/fa6";
 import { FaDoorOpen } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa6";

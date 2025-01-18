@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 
 const ConfirmAlert = ({ message, onConfirm, onCancel }) => {
   return (
@@ -6,18 +7,19 @@ const ConfirmAlert = ({ message, onConfirm, onCancel }) => {
       <div className="text-gray-900 bg-gray-200 rounded-lg w-[400px] py-6 px-5 shadow-xl border border-gray-900">
         <h1 className="text-center mb-5">{message}</h1>
         <div className="options flex justify-center gap-10">
-          <button
-            onClick={onConfirm}
-            className="bg-yellow-400 hover:bg-yellow-300 rounded-full px-5 py-3 text-sm"
-          >
-            Confirm
-          </button>
-          <button
-            onClick={onCancel}
-            className="hover:bg-gray-400 border rounded-full px-5 py-3 text-sm"
-          >
-            Cancel
-          </button>
+          <Button
+            buttonName={"Confirm"}
+            buttonColor={"bg-yellow-400"}
+            buttonHoverColor={"hover:bg-yellow-300"}
+            buttonWidth={"w-1/3"}
+            onClickFunction={onConfirm}
+          />
+          <Button
+            buttonName={"Cancel"}
+            buttonHoverColor={"hover:bg-gray-300"}
+            buttonWidth={"w-1/3"}
+            onClickFunction={onCancel}
+          />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 const AccomodationsTable = () => {
   const [accommodations, setAccommodations] = useState([]);
@@ -31,7 +31,7 @@ const AccomodationsTable = () => {
         }
       } catch (error) {
         console.log("An error occured: ", error);
-        setErrorMessage("An unexected error occured. Please try again later.");
+        setErrorMessage("An unexpected error occured. Please try again later.");
         setLoading(false);
       }
     };
@@ -52,26 +52,32 @@ const AccomodationsTable = () => {
       <thead className="mb-2">
         <tr className="mb-2">
           <th className="w-24">#</th>
-          <th className="w-3/5">Name</th>
+          <th className="w-1/5">Name</th>
           <th className="w-1/5">Type</th>
-          <th className="w-1/5">Actions</th>
+          <th className="w-1/5">Capacity</th>
+          <th className="w-1/5">Price</th>
+          <th className="w-1/5"></th>
         </tr>
       </thead>
       <tbody>
         {accommodations.map((accommodation, index) => (
           <tr key={accommodation.id} className=" py-1">
             <td className="w-14 py-1 px-2 border">{index + 1}</td>
-            <td className="w-3/5 py-1 px-2 border">
+            <td className="w-1/5 py-1 px-2 border">
               {accommodation.accomodation_name}
             </td>
             <td className="w-1/5 py-1 px-2 border">
               {accommodation.accomodation_type}
             </td>
+            <td className="w-1/5 py-1 px-2 border">{accommodation.capacity}</td>
+            <td className="w-1/5 py-1 px-2 border">
+              Php {accommodation.price}
+            </td>
             <td className="w-1/5 py-1 px-2">
               <div className="flex justify-center gap-2 ">
                 <Link
                   to={`/admin/accommodation/${accommodation.id}`}
-                  className="rounded-lg py-2 px-5 text-gray-900 bg-yellow-400 hover:bg-yellow-300"
+                  className="rounded-lg py-2 px-5 text-gray-900 bg-yellow-400 hover:bg-yellow-300 shadow-lg"
                 >
                   Show more
                 </Link>
