@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Spinner from "../Spinner";
 import Button from "../Button";
+import ConfirmAlert from "../ConfirmAlert";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StaffTable = () => {
   const [staff, setStaff] = useState([]);
+  const [selectedStaff, setSelectedStaff] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +52,48 @@ const StaffTable = () => {
     return <p className="text-center mt-10 text-red-500">{errorMessage}</p>;
   }
 
+  const deleteStaff = async (id) => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/delete_staff.php",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id }),
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+      console.log("Response: ", result);
+
+      if (response.ok && result.success) {
+        setStaff((prevGuests) => prevGuests.filter((guest) => guest.id !== id));
+        toast.success("Staff account deleted successfully.");
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch (error) {
+      console.log("An error occured: ", error);
+      setErrorMessage("An unexpected error occured. Please try again later.");
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (id) => {
+    setSelectedStaff(id);
+    setShowConfirm(true);
+  };
+
+  const handleCancel = async () => {
+    setShowConfirm(false);
+  };
+
+  const handleConfirm = async () => {
+    setShowConfirm(false);
+    await deleteStaff(selectedStaff);
+  };
+
   return (
     <table className="w-full">
       <thead className="mb-2">
@@ -67,10 +113,19 @@ const StaffTable = () => {
             <td className="w-1/5 py-1 px-2">
               <div className="flex justify-center gap-2 ">
                 <Button
-                  buttonName={"Actions"}
-                  buttonColor={"bg-yellow-400"}
-                  buttonHoverColor={"hover:bg-yellow-300"}
+                  buttonName={"Delete"}
+                  buttonColor={"bg-red-600"}
+                  buttonHoverColor={"hover:bg-red-500"}
+                  onClickFunction={() => handleDeleteClick(staff.id)}
                 />
+
+                {showConfirm && selectedStaff === staff.id && (
+                  <ConfirmAlert
+                    message="Are you sure you want to delete this staff account? This action cannot be undone."
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                  />
+                )}
               </div>
             </td>
           </tr>
