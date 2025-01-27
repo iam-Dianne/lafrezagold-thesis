@@ -28,6 +28,8 @@ import AdminSignup from "./pages/Admin/AdminSignup";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import GuestLayout from "./layouts/GuestLayout";
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -71,6 +73,8 @@ const App = () => {
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
         </Route>
+
+        <Route path="/" element={<GuestLayout />}></Route>
       </>
     )
   );
