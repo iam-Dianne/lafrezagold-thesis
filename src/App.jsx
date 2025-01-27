@@ -30,6 +30,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import GuestLayout from "./layouts/GuestLayout";
+import Homepage from "./pages/Guest/Homepage";
+import About from "./components/Guest/About";
+
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -74,7 +77,9 @@ const App = () => {
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
         </Route>
 
-        <Route path="/" element={<GuestLayout />}></Route>
+        <Route path="/" element={<GuestLayout />}>
+          <Route index element={<Homepage />} />
+        </Route>
       </>
     )
   );

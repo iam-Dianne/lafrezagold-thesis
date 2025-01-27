@@ -10,7 +10,7 @@ const Hero = () => {
             LAFREZA GOLD BEACH RESORT AND HOTEL
           </div>
           <div className="text-xl sm:text-2xl flex items-center">
-            <FaLocationDot size={25} color="red" className="mr-2" />
+            <FaLocationDot size={25} className="mr-2 text-yellow-400" />
             Barrio Nagbalayon, Morong Bataan
           </div>
         </div>

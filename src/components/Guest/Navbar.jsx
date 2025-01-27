@@ -10,7 +10,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-black bg-opacity-50 text-gray-200 sm:flex sm:justify-between sm:px-36 py-4 px-6 absolute w-full z-10">
+    <div className="bg-black bg-opacity-40 text-gray-200 sm:flex sm:justify-between sm:px-36 py-4 px-6 fixed w-full z-10">
       <div className="py-4 px-6 flex justify-between items-center">
         <div className="font-bold">LAFREZA GOLD</div>
         <button onClick={ToggleMenu} className="sm:hidden">
@@ -26,7 +26,7 @@ const Navbar = () => {
         <ul className="sm:flex mb-8 sm:mb-0 sm:mr-12">
           <li className="">
             <a
-              href=""
+              href="#"
               className="hover:text-yellow-400 rounded sm:bg-none block px-2 py-1 sm:mr-3"
             >
               Home
@@ -34,7 +34,7 @@ const Navbar = () => {
           </li>
           <li>
             <a
-              href=""
+              href="/#about"
               className="hover:text-yellow-400 rounded block px-2 py-1 mt-1 sm:mt-0 sm:mr-3"
             >
               About
@@ -42,7 +42,7 @@ const Navbar = () => {
           </li>
           <li>
             <a
-              href=""
+              href="/#bookings"
               className="hover:text-yellow-400 rounded block px-2 py-1 mt-1 sm:mt-0 sm:mr-3"
             >
               Bookings
@@ -50,7 +50,7 @@ const Navbar = () => {
           </li>
           <li>
             <a
-              href=""
+              href="/#amenities"
               className="hover:text-yellow-400 rounded block px-2 py-1 mt-1 sm:mt-0"
             >
               Amenities
