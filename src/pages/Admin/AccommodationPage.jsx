@@ -1,8 +1,6 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
-import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../../components/Button";
 import { Swiper, SwiperSlide } from "swiper/react";

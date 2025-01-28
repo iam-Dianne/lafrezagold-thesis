@@ -4,3 +4,13 @@
   background-attachment: fixed;
   background-size: contain;
 }
+
+.about-background {
+  background-size: cover;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1022%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(243%2c 244%2c 246%2c 1)'%3e%3c/rect%3e%3cpath d='M 0%2c206 C 57.6%2c184.8 172.8%2c98.8 288%2c100 C 403.2%2c101.2 460.8%2c206 576%2c212 C 691.2%2c218 748.8%2c130.6 864%2c130 C 979.2%2c129.4 1036.8%2c229.8 1152%2c209 C 1267.2%2c188.2 1382.4%2c62.6 1440%2c26L1440 560L0 560z' fill='rgba(243%2c 244%2c 246%2c 1)'%3e%3c/path%3e%3cpath d='M 0%2c497 C 96%2c469.8 288%2c357.6 480%2c361 C 672%2c364.4 768%2c518.6 960%2c514 C 1152%2c509.4 1344%2c373.2 1440%2c338L1440 560L0 560z' fill='rgba(251%2c 191%2c 36%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1022'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+}
+
+.bookings-background {
+  background-size: cover;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1013%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(251%2c 191%2c 36%2c 1)'%3e%3c/rect%3e%3cpath d='M 0%2c143 C 57.6%2c128.2 172.8%2c57.4 288%2c69 C 403.2%2c80.6 460.8%2c211.6 576%2c201 C 691.2%2c190.4 748.8%2c13.2 864%2c16 C 979.2%2c18.8 1036.8%2c209.4 1152%2c215 C 1267.2%2c220.6 1382.4%2c78.2 1440%2c44L1440 560L0 560z' fill='rgba(243%2c 244%2c 246%2c 1)'%3e%3c/path%3e%3cpath d='M 0%2c513 C 96%2c493.6 288%2c412.4 480%2c416 C 672%2c419.6 768%2c557.4 960%2c531 C 1152%2c504.6 1344%2c333.4 1440%2c284L1440 560L0 560z' fill='rgba(17%2c 24%2c 39%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1013'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+}

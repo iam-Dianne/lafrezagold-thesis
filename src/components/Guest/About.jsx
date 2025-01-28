@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div id="about" className="h-screen relative">
+    <div id="about" className="h-screen relative about-background">
       <div className="content text-gray-800 relative h-full w-full px-8 pt-40 sm:px-44 sm:pt-36 flex flex-col items-center">
         <div className="w-full flex justify-between">
           <div className="about-img w-[350px] h-[380px] hidden sm:block">
