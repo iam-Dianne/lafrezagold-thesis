@@ -56,6 +56,14 @@ const Navbar = () => {
               Amenities
             </a>
           </li>
+          <li>
+            <a
+              href="/#contact-us"
+              className="hover:text-yellow-400 rounded block px-2 py-1 mt-1 sm:mt-0"
+            >
+              Contact us
+            </a>
+          </li>
         </ul>
         <Button
           buttonName={"Login"}

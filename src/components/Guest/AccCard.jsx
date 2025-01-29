@@ -22,7 +22,7 @@ const AccCard = () => {
     const fetchAccommodation = async () => {
       try {
         const response = await fetch(
-          "http://localhost/lafreza-server/admin/fetch_accommodations.php",
+          "http://localhost/lafreza-server/guest/fetch_accomodation_guest.php",
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -57,36 +57,38 @@ const AccCard = () => {
     return <p className="text-center mt-10 text-red-500">{errorMessage}</p>;
   }
 
+  const limitAccommodations = accommodations.slice(0, 3);
+
   return (
     <div className="w-full h-[350px] flex flex-wrap gap-5 justify-center">
-      {accommodations.map((accommodation) => (
+      {limitAccommodations.map((accommodation) => (
         <a
           key={accommodation.id}
           href=""
-          className="bg-gray-100 w-64 h-full rounded-lg shadow-xl overflow-hidden transition delay-50 ease-in-out hover:-translate-y-1 hover:scale-105"
+          className="bg-gray-100 w-80 sm:w-64 h-40 sm:h-full rounded-lg shadow-xl overflow-hidden transition delay-50 ease-in-out hover:-translate-y-1 hover:scale-105"
         >
           <div
             key={accommodation.id}
-            className="image-carousel w-full h-40 p-2"
+            className="w-full h-40 p-2 sm:flex-col flex"
           >
             <img
               src="../../images/gazebo.jpg"
               alt=""
-              className="object-cover w-full h-full rounded-md"
+              className="object-cover sm:w-full w-36 h-full rounded-md"
             />
             <div className="text-content px-3 py-2 flex flex-col">
               <div>
-                <h1 className="text-lg font-bold mb-2">
+                <h1 className="sm:text-lg text-md font-bold mb-2">
                   {accommodation.accomodation_name}
                 </h1>
                 <ul>
-                  <li className="text-gray-500">
+                  <li className="text-gray-500 sm:text-base text-xs">
                     {accommodation.accomodation_type}
                   </li>
-                  <li className="text-gray-500">
+                  <li className="text-gray-500 sm:text-base text-xs">
                     Capacity: {accommodation.capacity}
                   </li>
-                  <li className="text-gray-500">
+                  <li className="text-gray-500 sm:text-base text-xs">
                     Features:{" "}
                     {accommodation.features.length > 20
                       ? `${accommodation.features.slice(0, 20)}...`
@@ -94,7 +96,7 @@ const AccCard = () => {
                   </li>
                 </ul>
               </div>
-              <div className="text-yellow-400 font-bold mt-5">
+              <div className="text-yellow-400 font-bold mt-5 sm:text-base text-xs">
                 ₱ {accommodation.price}
               </div>
             </div>
