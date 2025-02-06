@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaBars, FaX } from "react-icons/fa6";
 import Button from "../Button";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const ToggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,7 +28,7 @@ const Navbar = () => {
         <ul className="sm:flex mb-8 sm:mb-0 sm:mr-12">
           <li className="">
             <a
-              href="#"
+              href="/"
               className="hover:text-yellow-400 rounded sm:bg-none block px-2 py-1 sm:mr-3"
             >
               Home
@@ -66,6 +68,9 @@ const Navbar = () => {
           </li>
         </ul>
         <Button
+          onClickFunction={() => {
+            navigate("/login");
+          }}
           buttonName={"Login"}
           buttonColor={"bg-yellow-400"}
           buttonHoverColor={"hover:bg-yellow-300"}

@@ -32,6 +32,8 @@ import "react-toastify/dist/ReactToastify.css";
 import GuestLayout from "./layouts/GuestLayout";
 import Homepage from "./pages/Guest/Homepage";
 import About from "./components/Guest/About";
+import GuestLogin from "./pages/Guest/GuestLogin";
+import GuestSignup from "./pages/Guest/GuestSignup";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -79,6 +81,8 @@ const App = () => {
 
         <Route path="/" element={<GuestLayout />}>
           <Route index element={<Homepage />} />
+          <Route path="/login" element={<GuestLogin />} />
+          <Route path="/sign-up" element={<GuestSignup />} />
         </Route>
       </>
     )
