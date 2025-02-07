@@ -1,6 +1,7 @@
 import React from "react";
 import AccCard from "./AccCard";
 import { FaArrowRight } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Bookings = () => {
   return (
@@ -14,9 +15,12 @@ const Bookings = () => {
           <AccCard />
         </div>
         <div className="text-gray-100 mt-48 sm:mt-6">
-          <a href="" className="flex items-center hover:text-yellow-400">
+          <Link
+            to="/accommodations"
+            className="flex items-center hover:text-yellow-400"
+          >
             View All <FaArrowRight className="ml-2" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>
