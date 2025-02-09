@@ -5,7 +5,7 @@ import Footer from "../components/Guest/Footer";
 
 const GuestLayout = () => {
   return (
-    <div className="bg-gray-100 text-gray-900">
+    <div className="bg-gray-100 text-gray-900 min-h-screen">
       <Navbar />
       <Outlet />
       <Footer />
