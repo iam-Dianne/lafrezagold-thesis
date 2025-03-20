@@ -201,19 +201,6 @@ const SidebarMenu = () => {
                 </ul>
               </li>
 
-              {/* STAFF TOGGLE */}
-              <li>
-                <Link
-                  to="/admin/manage-staff"
-                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
-                >
-                  <div className="flex items-center">
-                    <FaUsers className="mr-4" size={18} />
-                    <span>Staff</span>
-                  </div>
-                </Link>
-              </li>
-
               {/* TRANSACTIONS TOGGLE */}
               <li>
                 <button
@@ -252,6 +239,32 @@ const SidebarMenu = () => {
                     </Link>
                   </li>
                 </ul>
+              </li>
+
+              {/* ADMIN TOGGLE */}
+              <li>
+                <Link
+                  to="/admin/manage-admins"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
+                >
+                  <div className="flex items-center">
+                    <FaUser className="mr-4" size={18} />
+                    <span>Admins</span>
+                  </div>
+                </Link>
+              </li>
+
+              {/* STAFF TOGGLE */}
+              <li>
+                <Link
+                  to="/admin/manage-staff"
+                  className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg transition duration-75"
+                >
+                  <div className="flex items-center">
+                    <FaUsers className="mr-4" size={18} />
+                    <span>Staff</span>
+                  </div>
+                </Link>
               </li>
             </ul>
           </div>

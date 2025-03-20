@@ -20,6 +20,8 @@ const Navbar = () => {
     "/admin/guests-history": "Guest History",
     "/admin/guests-feedback": "Guest Feedbacks",
     "/admin/manage-staff": "Manage Staff",
+    "/admin/manage-admins": "Manage Admins",
+    "/admin/create-new-admin": "Create new admin",
     "/admin/reports": "Reports",
     "/admin/transactions": "Transactions",
     "/admin/refund-requests": "Refund Requests",

@@ -58,18 +58,18 @@ const AdminLogin = () => {
     <div className="login-card flex justify-center items-center h-screen w-full background-container">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-lg text-gray-900 bg-gray-50 shadow-lg h-2/3 w-96 py-7 px-6 flex flex-col justify-between"
+        className="rounded-lg text-gray-900 bg-gray-50 shadow-lg w-96 py-7 px-6 flex flex-col justify-between"
       >
         <div className="content">
           <div className="flex items-center flex-col mb-10">
             <h1 className="mb-1 font-bold text-xl">Admin Log-in</h1>
-            <p className="text-sm">
+            {/* <p className="text-sm">
               Or{" "}
               <Link to="/admin-signup" className="text-yellow-400 underline ">
                 Sign up
               </Link>{" "}
               for a new admin account
-            </p>
+            </p> */}
           </div>
           {errorMessage && (
             <div className="text-red-500 text-sm">{errorMessage}</div>
@@ -114,7 +114,7 @@ const AdminLogin = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="mt-10">
           <Button
             buttonColor={"bg-yellow-400"}
             buttonHoverColor={"bg-yellow-300"}

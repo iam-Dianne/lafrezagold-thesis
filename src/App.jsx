@@ -16,6 +16,7 @@ import GuestPage from "./pages/Admin/GuestPage";
 import GuestsHistory from "./pages/Admin/GuestsHistory";
 import GuestsFeedback from "./pages/Admin/GuestsFeedback";
 import ManageStaff from "./pages/Admin/ManageStaff";
+import ManageAdmins from "./pages/Admin/ManageAdmins";
 import Reservations from "./pages/Admin/Reservations";
 import ReservationsHistory from "./pages/Admin/ReservationsHistory";
 import ReservationsCalendar from "./pages/Admin/ReservationsCalendar";
@@ -34,13 +35,13 @@ import Homepage from "./pages/Guest/Homepage";
 import GuestLogin from "./pages/Guest/GuestLogin";
 import GuestSignup from "./pages/Guest/GuestSignup";
 import Accommodations from "./pages/Guest/Accommodations";
+import CreateNewAdmin from "./pages/Admin/CreateNewAdmin";
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-signup" element={<AdminSignup />} />
 
         <Route
           path="/admin"
@@ -75,6 +76,8 @@ const App = () => {
           <Route path="/admin/guests-history" element={<GuestsHistory />} />
           <Route path="/admin/guests-feedback" element={<GuestsFeedback />} />
           <Route path="/admin/manage-staff" element={<ManageStaff />} />
+          <Route path="/admin/manage-admins" element={<ManageAdmins />} />
+          <Route path="/admin/create-new-admin" element={<CreateNewAdmin />} />
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
         </Route>

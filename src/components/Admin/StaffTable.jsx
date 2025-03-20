@@ -31,7 +31,7 @@ const StaffTable = () => {
           setStaff(sortedData);
           setLoading(false);
         } else {
-          setErrorMessage(result.message || "Failed to load accommodations");
+          setErrorMessage(result.message || "Failed to load staff accounts");
           setLoading(false);
         }
       } catch (error) {
@@ -68,7 +68,7 @@ const StaffTable = () => {
       console.log("Response: ", result);
 
       if (response.ok && result.success) {
-        setStaff((prevGuests) => prevGuests.filter((guest) => guest.id !== id));
+        setStaff((prevStaff) => prevStaff.filter((staff) => staff.id !== id));
         toast.success("Staff account deleted successfully.");
       } else {
         setErrorMessage(result.message);
