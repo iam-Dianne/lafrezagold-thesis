@@ -7,7 +7,7 @@ import Amenities from "../../components/Guest/Amenities";
 
 const Homepage = () => {
   return (
-    <div className="relative flex flex-col overflow-x-hidden">
+    <div className="relative flex flex-col overflow-x-hidden w-full">
       <Hero />
       <About />
       <Bookings />

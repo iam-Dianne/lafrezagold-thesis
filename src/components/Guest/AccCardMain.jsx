@@ -3,17 +3,17 @@ import { FaArrowRight } from "react-icons/fa";
 
 const AccCardMain = ({ accommodation }) => {
   return (
-    <div className="rounded-lg w-full mt-5 sm:mt-0 h-40 sm:h-44 bg-gray-100 shadow-lg py-3 px-4 flex gap-4">
-      <div className="image">
+    <div className="rounded-lg w-full mt-5 sm:mt-0 h-48 sm:h-56 bg-gray-100 shadow-lg py-3 px-4 flex gap-4">
+      <div className="image w-1/3">
         <img
           src="../../images/gazebo.jpg"
           alt=""
           className="object-cover sm:w-full w-36 h-full rounded-md"
         />
       </div>
-      <div className="text flex flex-col sm:w-full sm:pr-2">
+      <div className="text flex flex-col justify-between sm:w-full sm:pr-2 ">
         <div>
-          <h1 className="sm:text-lg text-md font-bold mb-2">
+          <h1 className="sm:text-lg 2xl:text-xl text-md font-bold mb-2">
             {accommodation.accomodation_name}
           </h1>
           <ul>
@@ -28,9 +28,11 @@ const AccCardMain = ({ accommodation }) => {
             </li>
           </ul>
         </div>
-        <div className="text-yellow-400 mt-5 sm:text-base text-xs flex justify-between items-center">
-          <div className="font-bold">₱ {accommodation.price}</div>
-          <a href="" className="hover:text-yellow-300">
+        <div className="text-yellow-400  sm:text-base text-xs flex justify-between items-center">
+          <div className="font-extrabold 2xl:text-xl">
+            ₱ {accommodation.price}
+          </div>
+          <a href="" className="hover:text-yellow-300 font-extrabold">
             See more <FaArrowRight className="inline ml-1" />{" "}
           </a>
         </div>

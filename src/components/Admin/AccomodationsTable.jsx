@@ -48,7 +48,7 @@ const AccomodationsTable = () => {
   }
 
   return (
-    <table className="w-full">
+    <table className="w-full mb-5">
       <thead className="mb-2">
         <tr className="mb-2">
           <th className="w-24">#</th>

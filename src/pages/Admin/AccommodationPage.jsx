@@ -138,14 +138,14 @@ const AccommodationPage = ({ initialStatus }) => {
   }
 
   return (
-    <div className="single-accomodation text-gray-900">
+    <div className="single-accomodation flex flex-col text-gray-900 w-full h-full px-20">
       <div className="back-container mb-10">
         <Link to="/admin/accomodations" className="flex items-center">
           <FaArrowLeft className="mr-2" /> Back
         </Link>
       </div>
-      <div className="main-container">
-        <div className="flex justify-center ">
+      <div className="main-container flex justify-center ">
+        <div className="flex justify-center">
           <div className="images-carousel w-[380px] h-[230px]">
             <Swiper
               style={{ zIndex: 0 }}

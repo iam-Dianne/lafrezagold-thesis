@@ -60,16 +60,16 @@ const AccCard = () => {
   const limitAccommodations = accommodations.slice(0, 3);
 
   return (
-    <div className="w-full h-[350px] flex flex-wrap gap-5 justify-center">
+    <div className="w-full h-[350px] flex flex-wrap gap-5 2xl:gap-10 justify-center ">
       {limitAccommodations.map((accommodation) => (
         <a
           key={accommodation.id}
           href=""
-          className="bg-gray-100 w-80 sm:w-64 h-40 sm:h-full rounded-lg shadow-xl overflow-hidden transition delay-50 ease-in-out hover:-translate-y-1 hover:scale-105"
+          className="bg-gray-100 w-80 sm:w-64 h-40 sm:h-full 2xl:w-[380px] 2xl:h-[500px] rounded-lg shadow-xl overflow-hidden transition delay-50 ease-in-out hover:-translate-y-1 hover:scale-105"
         >
           <div
             key={accommodation.id}
-            className="w-full h-40 p-2 sm:flex-col flex"
+            className="w-full 2xl:h-48 p-2 sm:flex-col flex"
           >
             <img
               src="../../images/gazebo.jpg"
