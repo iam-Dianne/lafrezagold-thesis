@@ -72,7 +72,7 @@ const CreateNewAdmin = () => {
     <div className="flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-lg text-gray-900 bg-gray-50 py-7 px-6 flex flex-col justify-between sm:w-[600px] xs:w-[400px]"
+        className=" text-gray-900 mt-10 flex flex-col justify-between sm:w-[600px] xs:w-[400px]"
       >
         <div className="content flex flex-col">
           <div className="admin-fullname">
@@ -180,7 +180,7 @@ const CreateNewAdmin = () => {
           <Button
             buttonColor={"bg-yellow-400"}
             buttonHoverColor={"bg-yellow-300"}
-            buttonName={"Sign up"}
+            buttonName={"Create Account"}
             buttonWidth={"w-full"}
           />
         </div>

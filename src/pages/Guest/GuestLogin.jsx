@@ -60,12 +60,6 @@ const GuestLogin = () => {
           <h1 className="font-bold text-base sm:text-xl">
             Log in to your account
           </h1>
-          <span>
-            or{" "}
-            <Link to="/sign-up" className="text-yellow-400 underline">
-              sign up for a new account
-            </Link>
-          </span>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="content mb-10">
@@ -102,6 +96,11 @@ const GuestLogin = () => {
                 </p>
               )}
             </div>
+          </div>
+          <div className="mb-3">
+            <Link to="/sign-up" className="text-yellow-400 underline">
+              Already have an account?
+            </Link>
           </div>
           <div className="submit-button">
             <Button

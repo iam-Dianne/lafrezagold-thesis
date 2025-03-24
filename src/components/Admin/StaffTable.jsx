@@ -100,6 +100,7 @@ const StaffTable = () => {
         <tr className="mb-2">
           <th className="w-14">#</th>
           <th className="w-2/5">Name</th>
+          <th className="w-1/5">Username</th>
           <th className="w-2/5">Email</th>
           <th className="w-1/5"></th>
         </tr>
@@ -109,6 +110,7 @@ const StaffTable = () => {
           <tr key={staff.id} className=" py-1">
             <td className="w-14 py-1 px-2 border">{index + 1}</td>
             <td className="w-1/5 py-1 px-2 border">{staff.staff_name}</td>
+            <td className="w-1/5 py-1 px-2 border">{staff.staff_username}</td>
             <td className="w-1/5 py-1 px-2 border">{staff.staff_email}</td>
             <td className="w-1/5 py-1 px-2">
               <div className="flex justify-center gap-2 ">

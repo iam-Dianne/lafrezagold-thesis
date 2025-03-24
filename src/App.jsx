@@ -25,7 +25,6 @@ import AccommodationPage from "./pages/Admin/AccommodationPage";
 import EditAccommodation from "./pages/Admin/EditAccommodation";
 import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
-import AdminSignup from "./pages/Admin/AdminSignup";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +35,7 @@ import GuestLogin from "./pages/Guest/GuestLogin";
 import GuestSignup from "./pages/Guest/GuestSignup";
 import Accommodations from "./pages/Guest/Accommodations";
 import CreateNewAdmin from "./pages/Admin/CreateNewAdmin";
+import CreateNewStaff from "./pages/Admin/CreateNewStaff";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -76,6 +76,7 @@ const App = () => {
           <Route path="/admin/guests-history" element={<GuestsHistory />} />
           <Route path="/admin/guests-feedback" element={<GuestsFeedback />} />
           <Route path="/admin/manage-staff" element={<ManageStaff />} />
+          <Route path="/admin/create-new-staff" element={<CreateNewStaff />} />
           <Route path="/admin/manage-admins" element={<ManageAdmins />} />
           <Route path="/admin/create-new-admin" element={<CreateNewAdmin />} />
           <Route path="/admin/transactions" element={<Transactions />} />

@@ -71,15 +71,9 @@ const GuestSignup = () => {
       <div className="sm:w-[700px] w-[300px] rounded-lg shadow-xl bg-gray-100 px-6 py-5">
         <div className="w-full flex flex-col items-center text-xs sm:text-sm mb-4">
           <h1 className="font-bold text-base sm:text-xl">Sign up</h1>
-          <span>
-            or{" "}
-            <Link to="/login" className="text-yellow-400 underline">
-              Log in to an existing account
-            </Link>
-          </span>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="content mb-10">
+          <div className="content mb-5">
             <div className="name sm:flex sm:gap-3">
               <div className="mb-3 sm:w-2/3 flex flex-col">
                 <label htmlFor="firstName">First name</label>
@@ -181,6 +175,13 @@ const GuestSignup = () => {
               </div>
             </div>
           </div>
+
+          <div className="mb-3">
+            <Link to="/login" className="text-yellow-400 underline ">
+              Log in to an existing account
+            </Link>
+          </div>
+
           <div className="submit-button">
             <Button
               buttonName={"Sign up"}
