@@ -64,7 +64,7 @@ const CreateNewAdmin = () => {
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      console.log("An error occurred: ", error);
       toast.error("An error occured when creating an account");
     }
   };

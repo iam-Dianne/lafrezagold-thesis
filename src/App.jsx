@@ -36,6 +36,7 @@ import GuestSignup from "./pages/Guest/GuestSignup";
 import Accommodations from "./pages/Guest/Accommodations";
 import CreateNewAdmin from "./pages/Admin/CreateNewAdmin";
 import CreateNewStaff from "./pages/Admin/CreateNewStaff";
+import SingleAccommodation from "./pages/Guest/SingleAccommodation";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="/sign-up" element={<GuestSignup />} />
 
           <Route path="/accommodations" element={<Accommodations />} />
+          <Route path="/accommodations/:id" element={<SingleAccommodation />} />
         </Route>
       </>
     )

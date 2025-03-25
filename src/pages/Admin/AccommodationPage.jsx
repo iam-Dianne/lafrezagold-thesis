@@ -47,7 +47,7 @@ const AccommodationPage = ({ initialStatus }) => {
           setLoading(false);
         } else {
           setErrorMessage(
-            result.message || "Failed to load accommodation details"
+            result.message || "Failed to load accommodation details."
           );
           setLoading(false);
         }

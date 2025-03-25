@@ -60,7 +60,7 @@ const AccCard = () => {
   const limitAccommodations = accommodations.slice(0, 3);
 
   return (
-    <div className="w-full h-[350px] flex flex-wrap gap-5 2xl:gap-10 justify-center ">
+    <div className="w-full  flex flex-wrap gap-5 2xl:gap-10 justify-center ">
       {limitAccommodations.map((accommodation) => (
         <a
           key={accommodation.id}

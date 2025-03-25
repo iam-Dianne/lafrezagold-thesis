@@ -38,6 +38,32 @@ const CreateNewStaff = () => {
 
   const navigate = useNavigate();
 
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/staff_signup.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(result.message);
+        return navigate("/admin/manage-staff");
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.log("An error occured: ", error);
+      toast.error("An error occured when creating an account");
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <form

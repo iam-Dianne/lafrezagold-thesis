@@ -1,5 +1,6 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AccCardMain = ({ accommodation }) => {
   return (
@@ -32,9 +33,12 @@ const AccCardMain = ({ accommodation }) => {
           <div className="font-extrabold 2xl:text-xl">
             ₱ {accommodation.price}
           </div>
-          <a href="" className="hover:text-yellow-300 font-extrabold">
+          <Link
+            to={`/accommodations/${accommodation.id}`}
+            className="hover:text-yellow-300 font-extrabold"
+          >
             See more <FaArrowRight className="inline ml-1" />{" "}
-          </a>
+          </Link>
         </div>
       </div>
     </div>
