@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import Button from "../../components/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toast } from "react-toastify";
@@ -72,7 +72,7 @@ const SingleAccommodation = ({ initialStatus }) => {
 
   return (
     <div className=" w-full min-h-screen pt-24 pb-24 guest-form-bg flex justify-center items-center">
-      <div className="bg-gray-100 h-[700px] w-[340px] sm:h-[500px] sm:w-[1000px] 2xl:w-[1600px] 2xl:h-[700px] shadow-lg rounded-lg p-5 sm:px-14 sm:pt-10">
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 sm:pt-10 2xl:px-20">
         <div className="mb-10">
           <Link to="/accommodations" className="flex items-center">
             <FaArrowLeft className="mr-2" /> Back
@@ -80,7 +80,7 @@ const SingleAccommodation = ({ initialStatus }) => {
         </div>
         <div className="main-container flex justify-center">
           <div className="flex sm:justify-center sm:flex-row flex-col">
-            <div className="images-carousel w-[300px] sm:w-[380px] sm:h-[230px] sm:mb-0 mb-5">
+            <div className="images-carousel w-[300px] sm:w-[380px] sm:h-[230px] sm:mb-0 mb-5 2xl:w-[480px] 2xl:h-[330 px]">
               <Swiper
                 style={{ zIndex: 0 }}
                 spaceBetween={5}
@@ -123,6 +123,32 @@ const SingleAccommodation = ({ initialStatus }) => {
                   {accommodation.price}
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+        <div className="reservation-date">
+          <div className="date mt-10 mb-2 font-bold">Date of Reservation:</div>
+          <div className="reservation-date flex sm:gap-10 items-center sm:justify-center flex-wrap">
+            <div className="date-from flex sm:items-center flex-col sm:flex-row">
+              <label htmlFor="date-from" className="mr-3">
+                From
+              </label>
+              <input
+                type="date"
+                id="date-from"
+                className="rounded-lg p-2 sm:w-[300px]"
+              />
+            </div>
+            <FaArrowRight size={25} />
+            <div className="date-to flex sm:items-center flex-col sm:flex-row">
+              <label htmlFor="date-to" className="mr-3">
+                To
+              </label>
+              <input
+                type="date"
+                id="date-to"
+                className="rounded-lg p-2 sm:w-[300px]"
+              />
             </div>
           </div>
         </div>
