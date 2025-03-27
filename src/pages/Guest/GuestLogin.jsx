@@ -99,7 +99,7 @@ const GuestLogin = () => {
           </div>
           <div className="mb-3">
             <Link to="/sign-up" className="text-yellow-400 underline">
-              Already have an account?
+              Don't have an account? Sign up
             </Link>
           </div>
           <div className="submit-button">

@@ -1,14 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaX } from "react-icons/fa6";
+import { FaUserCircle } from "react-icons/fa";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import Button from "../Button";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/lafreza-server/guest/check_session.php", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.loggedIn) {
+          setIsLoggedIn(true);
+          setUserEmail(response.data.email);
+          console.log("User is logged in");
+        } else {
+          setIsLoggedIn(false);
+          console.log("User is not logged in");
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking session: ", error);
+      });
+  }, []);
 
   const ToggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+  const toggleDropdown = (dropdown) => {
+    // so this basically says: is this dropdown already open? if not the drop down eyy
+    setActiveDropdown((prev) => !prev);
   };
 
   return (
@@ -67,14 +99,55 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
-        <Button
-          onClickFunction={() => {
-            navigate("/login");
-          }}
-          buttonName={"Login"}
-          buttonColor={"bg-yellow-400"}
-          buttonHoverColor={"hover:bg-yellow-300"}
-        />
+        {isLoggedIn ? (
+          <div className="relative">
+            <button className="flex" onClick={toggleDropdown}>
+              <FaUserCircle size={28} className="mr-1" />
+              <RiArrowDropDownLine size={28} />
+            </button>
+            {activeDropdown && (
+              <ul className="absolute top-10 right-1 w-40 bg-gray-100 rounded-lg text-gray-900 px-3 py-4">
+                <li>
+                  <a
+                    href="#"
+                    className="flex hover:bg-gray-200 w-full py-2 px-3 rounded-lg"
+                  >
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      axios
+                        .get(
+                          "http://localhost/lafreza-server/guest/guest_logout.php",
+                          {
+                            withCredentials: true,
+                          }
+                        )
+                        .then(() => {
+                          setIsLoggedIn(false);
+                          setActiveDropdown(false);
+                          navigate("/");
+                          toast.success("Successfully logged out.");
+                        });
+                    }}
+                    className="flex hover:bg-gray-200 w-full py-2 px-3 rounded-lg"
+                  >
+                    Log out
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+        ) : (
+          <Button
+            onClickFunction={() => navigate("/login")}
+            buttonName={"Login"}
+            buttonColor={"bg-yellow-400"}
+            buttonHoverColor={"hover:bg-yellow-300"}
+          />
+        )}
       </div>
     </div>
   );
