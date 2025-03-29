@@ -13,6 +13,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { number } from "yup";
+import Map from "../../components/Guest/Map";
+import { FaMapMarker } from "react-icons/fa";
 
 const SingleAccommodation = ({ initialStatus }) => {
   const { id } = useParams();
@@ -218,9 +220,13 @@ const SingleAccommodation = ({ initialStatus }) => {
               />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 mb-3">
             <span className="font-bold">No. of days:</span>{" "}
             <span>{numberOfDays}</span>
+          </div>
+          <div className="bg-green-200 py-2 px-4 rounded">
+            Overnight Package: Check-in time: 2:00PM | Daytour Package: Check-in
+            time: 7:00AM to 6:00PM
           </div>
           <div className="mt-5">
             <div className="font-bold ">Guest Information</div>{" "}
@@ -228,7 +234,7 @@ const SingleAccommodation = ({ initialStatus }) => {
               Entrance fee is required for every guest that exceeds the room
               capacity and for cottage only guests.
             </div>
-            <div className="flex sm:gap-5 mt-3">
+            <div className="flex sm:gap-5 mt-3 flex-col sm:flex-row">
               <div className="flex flex-col">
                 <label htmlFor="adults">
                   Adults (₱{adultEntranceFee} each)
@@ -257,7 +263,7 @@ const SingleAccommodation = ({ initialStatus }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20">
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20 mb-5">
         <div className="date  font-bold">Price Breakdown</div>
         <div className="mt-3">
           {/* Room Price Breakdown */}
@@ -295,11 +301,23 @@ const SingleAccommodation = ({ initialStatus }) => {
 
           {/* Final Total Price */}
           {numberOfDays > 0 && (
-            <div className="mt-5 font-bold">
+            <div className="mt-5 font-bold bg-green-200 py-2 px-4 rounded">
               Total Price: ₱
               {numberOfDays * (accommodation?.price || 0) + totalEntranceFee}
             </div>
           )}
+        </div>
+      </div>
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20">
+        <div className="date font-bold">Location</div>
+        <div className="mb-3 flex items-center">
+          <FaMapMarker className="text-yellow-300" />{" "}
+          <span className="ml-2 ">
+            Sitio Crossing Nagbalayong , Morong, Philippines
+          </span>
+        </div>
+        <div className="">
+          <Map />
         </div>
       </div>
     </div>
