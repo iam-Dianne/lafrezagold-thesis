@@ -13,9 +13,11 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [activeDropdown, setActiveDropdown] = useState();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const checkSession = () => {
+    setLoading(true);
     axios
       .get("http://localhost/lafreza-server/guest/check_session.php", {
         withCredentials: true,
@@ -32,15 +34,39 @@ const Navbar = () => {
       })
       .catch((error) => {
         console.error("Error checking session: ", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    checkSession();
   }, []);
 
   const ToggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const toggleDropdown = (dropdown) => {
-    // so this basically says: is this dropdown already open? if not the drop down eyy
+  const toggleDropdown = () => {
     setActiveDropdown((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    axios
+      .get("http://localhost/lafreza-server/guest/guest_logout.php", {
+        withCredentials: true,
+      })
+      .then(() => {
+        setIsLoggedIn(false);
+        setActiveDropdown(false);
+        navigate("/");
+        checkSession(); // Recheck session after logout
+        toast.success("Successfully logged out.");
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+        toast.error("Error logging out.");
+      });
   };
 
   return (
@@ -99,17 +125,22 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
-        {isLoggedIn ? (
+        {loading ? (
+          <p className="text-yellow-400">Loading...</p>
+        ) : isLoggedIn ? (
           <div className="relative">
-            <button className="flex" onClick={toggleDropdown}>
-              <FaUserCircle size={28} className="mr-1" />
+            <button className="flex items-center" onClick={toggleDropdown}>
+              <FaUserCircle size={28} className="mr-" />
               <RiArrowDropDownLine size={28} />
             </button>
             {activeDropdown && (
-              <ul className="absolute top-10 right-1 w-40 bg-gray-100 rounded-lg text-gray-900 px-3 py-4">
+              <ul className="absolute top-10 right-1 bg-gray-100 rounded-lg text-gray-900 px-2 py-2 shadow-lg">
+                <li className="flex w-full py-2 px-3 rounded-lg text-gray-400 border-gray-400">
+                  <span>{userEmail}</span>
+                </li>
                 <li>
                   <a
-                    href="#"
+                    href="/profile"
                     className="flex hover:bg-gray-200 w-full py-2 px-3 rounded-lg"
                   >
                     Profile
@@ -117,21 +148,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    onClick={() => {
-                      axios
-                        .get(
-                          "http://localhost/lafreza-server/guest/guest_logout.php",
-                          {
-                            withCredentials: true,
-                          }
-                        )
-                        .then(() => {
-                          setIsLoggedIn(false);
-                          setActiveDropdown(false);
-                          navigate("/");
-                          toast.success("Successfully logged out.");
-                        });
-                    }}
+                    onClick={handleLogout}
                     className="flex hover:bg-gray-200 w-full py-2 px-3 rounded-lg"
                   >
                     Log out

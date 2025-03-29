@@ -43,7 +43,10 @@ const GuestLogin = () => {
 
       if (result.success) {
         toast.success(result.message);
-        return navigate("/");
+        navigate("/");
+        setTimeout(() => {
+          navigate(0); // 👈 Reload page after 1.5 seconds
+        }, 2000);
       } else {
         setErrorMessage(result.message);
       }
@@ -99,7 +102,7 @@ const GuestLogin = () => {
           </div>
           <div className="mb-3">
             <Link to="/sign-up" className="text-yellow-400 underline">
-              Don't have an account? Sign up
+              Already have an account?
             </Link>
           </div>
           <div className="submit-button">

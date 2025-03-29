@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
+import { number } from "yup";
 
 const SingleAccommodation = ({ initialStatus }) => {
   const { id } = useParams();
@@ -21,6 +22,16 @@ const SingleAccommodation = ({ initialStatus }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
   const [status, setStatus] = useState(initialStatus);
+
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [numberOfDays, setNumberOfDays] = useState(0);
+
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+
+  const adultEntranceFee = 300;
+  const childEntranceFee = 250;
 
   const navigate = useNavigate();
 
@@ -62,6 +73,58 @@ const SingleAccommodation = ({ initialStatus }) => {
     fetchAccommodation();
   }, [id]);
 
+  // calculate number of days
+  const calculateDays = (from, to) => {
+    if (from && to) {
+      const startDate = new Date(from);
+      const endDate = new Date(to);
+      const timeDiff = endDate - startDate;
+
+      if (timeDiff >= 0) {
+        const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        setNumberOfDays(days);
+      } else {
+        setNumberOfDays(0);
+      }
+    } else {
+      setNumberOfDays(0);
+    }
+  };
+
+  // handle date change
+  const handleDateChange = (e, type) => {
+    const value = e.target.value;
+    if (type === "from") {
+      setDateFrom(value);
+      calculateDays(value, dateTo);
+    } else if (type === "to") {
+      setDateTo(value);
+      calculateDays(dateFrom, value);
+    }
+  };
+
+  const calculateEntranceFee = () => {
+    if (!accommodation) return 0;
+
+    if (accommodation.accomodation_type === "Room") {
+      const excessGuests = adults + children - accommodation.capacity;
+      if (excessGuests > 0) {
+        const excessAdults = Math.min(excessGuests, adults); // Prioritize adults for excess
+        const excessChildren = excessGuests - excessAdults;
+        return (
+          excessAdults * adultEntranceFee + excessChildren * childEntranceFee
+        );
+      }
+    } else if (accommodation.accomodation_type === "Cottage") {
+      return adults * adultEntranceFee + children * childEntranceFee;
+    }
+    return 0;
+  };
+
+  const totalEntranceFee = calculateEntranceFee();
+  const totalPrice =
+    numberOfDays * (accommodation?.price || 0) + totalEntranceFee;
+
   if (loading) {
     return <Spinner />;
   }
@@ -71,8 +134,8 @@ const SingleAccommodation = ({ initialStatus }) => {
   }
 
   return (
-    <div className=" w-full min-h-screen pt-24 pb-24 guest-form-bg flex justify-center items-center">
-      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 sm:pt-10 2xl:px-20">
+    <div className=" w-full min-h-screen pt-24 pb-24 guest-form-bg flex justify-center items-center flex-col">
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 sm:pt-10 2xl:px-20 mb-5">
         <div className="mb-10">
           <Link to="/accommodations" className="flex items-center">
             <FaArrowLeft className="mr-2" /> Back
@@ -119,7 +182,7 @@ const SingleAccommodation = ({ initialStatus }) => {
                   {accommodation.capacity}
                 </li>
                 <li>
-                  <span className="text-gray-500">Price: </span>₱
+                  <span className="text-gray-500">Price: </span>Php{" "}
                   {accommodation.price}
                 </li>
               </ul>
@@ -128,7 +191,7 @@ const SingleAccommodation = ({ initialStatus }) => {
         </div>
         <div className="reservation-date">
           <div className="date mt-10 mb-2 font-bold">Date of Reservation:</div>
-          <div className="reservation-date flex sm:gap-10 items-center sm:justify-center flex-wrap">
+          <div className="reservation-date flex sm:gap-10 items-center sm:justify-center flex-wrap mb-3">
             <div className="date-from flex sm:items-center flex-col sm:flex-row">
               <label htmlFor="date-from" className="mr-3">
                 From
@@ -136,6 +199,8 @@ const SingleAccommodation = ({ initialStatus }) => {
               <input
                 type="date"
                 id="date-from"
+                value={dateFrom}
+                onChange={(e) => handleDateChange(e, "from")}
                 className="rounded-lg p-2 sm:w-[300px]"
               />
             </div>
@@ -147,10 +212,94 @@ const SingleAccommodation = ({ initialStatus }) => {
               <input
                 type="date"
                 id="date-to"
+                value={dateTo}
+                onChange={(e) => handleDateChange(e, "to")}
                 className="rounded-lg p-2 sm:w-[300px]"
               />
             </div>
           </div>
+          <div className="mt-3">
+            <span className="font-bold">No. of days:</span>{" "}
+            <span>{numberOfDays}</span>
+          </div>
+          <div className="mt-5">
+            <div className="font-bold ">Guest Information</div>{" "}
+            <div className="italic text-gray-500">
+              Entrance fee is required for every guest that exceeds the room
+              capacity and for cottage only guests.
+            </div>
+            <div className="flex sm:gap-5 mt-3">
+              <div className="flex flex-col">
+                <label htmlFor="adults">
+                  Adults (₱{adultEntranceFee} each)
+                </label>
+                <input
+                  type="number"
+                  id="adults"
+                  value={adults}
+                  onChange={(e) => setAdults(parseInt(e.target.value) || 0)}
+                  className="rounded-lg p-2 sm:w-[150px]"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="children">
+                  Children (₱{childEntranceFee} each)
+                </label>
+                <input
+                  type="number"
+                  id="children"
+                  value={children}
+                  onChange={(e) => setChildren(parseInt(e.target.value) || 0)}
+                  className="rounded-lg p-2 sm:w-[150px]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20">
+        <div className="date  font-bold">Price Breakdown</div>
+        <div className="mt-3">
+          {/* Room Price Breakdown */}
+          {numberOfDays > 0 ? (
+            <p>
+              <span className="text-gray-500">Room Price:</span> ₱
+              {accommodation.price} x {numberOfDays} days = ₱
+              {accommodation.price * numberOfDays}
+            </p>
+          ) : (
+            <p className="text-gray-500">
+              Select valid dates to calculate price.
+            </p>
+          )}
+
+          {/* Entrance Fee Breakdown */}
+          {totalEntranceFee > 0 ? (
+            <>
+              <p className="mt-3">
+                <span className="text-gray-500">Entrance Fee (Adults):</span> ₱
+                {adultEntranceFee} x {adults} = ₱{adults * adultEntranceFee}
+              </p>
+              <p>
+                <span className="text-gray-500">Entrance Fee (Children):</span>{" "}
+                ₱{childEntranceFee} x {children} = ₱
+                {children * childEntranceFee}
+              </p>
+              <p className="font-bold mt-3">
+                Total Entrance Fee: ₱{totalEntranceFee}
+              </p>
+            </>
+          ) : (
+            <p className="text-gray-500 mt-3">No entrance fee applicable.</p>
+          )}
+
+          {/* Final Total Price */}
+          {numberOfDays > 0 && (
+            <div className="mt-5 font-bold">
+              Total Price: ₱
+              {numberOfDays * (accommodation?.price || 0) + totalEntranceFee}
+            </div>
+          )}
         </div>
       </div>
     </div>
