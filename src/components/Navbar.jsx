@@ -10,9 +10,9 @@ const Navbar = () => {
 
   const pageTitles = {
     "/admin": "Dashboard",
-    "/admin/accomodations": "Accomodations",
+    "/admin/accomodations": "Accommodations",
     "/admin/accomodation/:id": "",
-    "/admin/add-accomodations": "Add Accomodation",
+    "/admin/add-accomodations": "Add Accommodation",
     "/admin/reservations": "Reservations",
     "/admin/reservations-history": "Reservation History",
     "/admin/reservations-calendar": "Reservation Calendar",

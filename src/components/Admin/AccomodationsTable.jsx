@@ -20,6 +20,7 @@ const AccomodationsTable = () => {
           }
         );
         const result = await response.json();
+        console.log("API Response: ", result);
 
         if (response.ok) {
           const sortedData = result.data.sort((a, b) => a.id - b.id);
