@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import Button from "../../components/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ConfirmAlert from "../../components/ConfirmAlert";
+import ProgressBar from "../../components/Guest/ProgressBar";
+import Button from "../../components/Button";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -22,7 +20,6 @@ const SingleAccommodation = ({ initialStatus }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showConfirm, setShowConfirm] = useState(false);
   const [status, setStatus] = useState(initialStatus);
 
   const [dateFrom, setDateFrom] = useState("");
@@ -137,6 +134,8 @@ const SingleAccommodation = ({ initialStatus }) => {
 
   return (
     <div className=" w-full min-h-screen pt-24 pb-24 guest-form-bg flex justify-center items-center flex-col">
+      {/* <ProgressBar /> */}
+
       <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 sm:pt-10 2xl:px-20 mb-5">
         <div className="mb-10">
           <Link to="/accommodations" className="flex items-center">
@@ -166,29 +165,31 @@ const SingleAccommodation = ({ initialStatus }) => {
                 ))}
               </Swiper>
             </div>
-            <div className="ml-5">
-              <h1 className="text-3xl font-bold mb-4">
-                {accommodation.accomodation_name}
-              </h1>
-              <ul>
-                <li>
-                  <span className="text-gray-500">Type: </span>
-                  {accommodation.accomodation_type}
-                </li>
-                <li>
-                  <span className="text-gray-500">Features: </span>
-                  {accommodation.features}
-                </li>
-                <li>
-                  <span className="text-gray-500">Capacity: </span>
-                  {accommodation.capacity}
-                </li>
-                <li>
-                  <span className="text-gray-500">Price: </span>Php{" "}
-                  {accommodation.price}
-                </li>
-              </ul>
-            </div>
+            {accommodation && (
+              <div className="ml-5">
+                <h1 className="text-3xl font-bold mb-4">
+                  {accommodation.accomodation_name}
+                </h1>
+                <ul>
+                  <li>
+                    <span className="text-gray-500">Type: </span>
+                    {accommodation.accomodation_type}
+                  </li>
+                  <li>
+                    <span className="text-gray-500">Features: </span>
+                    {accommodation.features}
+                  </li>
+                  <li>
+                    <span className="text-gray-500">Capacity: </span>
+                    {accommodation.capacity}
+                  </li>
+                  <li>
+                    <span className="text-gray-500">Price: </span>Php{" "}
+                    {accommodation.price}
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
         <div className="reservation-date">
@@ -237,7 +238,7 @@ const SingleAccommodation = ({ initialStatus }) => {
             <div className="flex sm:gap-5 mt-3 flex-col sm:flex-row">
               <div className="flex flex-col">
                 <label htmlFor="adults">
-                  Adults (₱{adultEntranceFee} each)
+                  Adults (Php {adultEntranceFee} each)
                 </label>
                 <input
                   type="number"
@@ -249,7 +250,7 @@ const SingleAccommodation = ({ initialStatus }) => {
               </div>
               <div className="flex flex-col">
                 <label htmlFor="children">
-                  Children (₱{childEntranceFee} each)
+                  Children (Php {childEntranceFee} each)
                 </label>
                 <input
                   type="number"
@@ -269,8 +270,8 @@ const SingleAccommodation = ({ initialStatus }) => {
           {/* Room Price Breakdown */}
           {numberOfDays > 0 ? (
             <p>
-              <span className="text-gray-500">Room Price:</span> ₱
-              {accommodation.price} x {numberOfDays} days = ₱
+              <span className="text-gray-500">Room Price:</span> Php{" "}
+              {accommodation.price} x {numberOfDays} days = Php{" "}
               {accommodation.price * numberOfDays}
             </p>
           ) : (
@@ -283,16 +284,17 @@ const SingleAccommodation = ({ initialStatus }) => {
           {totalEntranceFee > 0 ? (
             <>
               <p className="mt-3">
-                <span className="text-gray-500">Entrance Fee (Adults):</span> ₱
-                {adultEntranceFee} x {adults} = ₱{adults * adultEntranceFee}
+                <span className="text-gray-500">Entrance Fee (Adults):</span>{" "}
+                Php {adultEntranceFee} x {adults} = Php{" "}
+                {adults * adultEntranceFee}
               </p>
               <p>
                 <span className="text-gray-500">Entrance Fee (Children):</span>{" "}
-                ₱{childEntranceFee} x {children} = ₱
+                Php {childEntranceFee} x {children} = Php{" "}
                 {children * childEntranceFee}
               </p>
               <p className="font-bold mt-3">
-                Total Entrance Fee: ₱{totalEntranceFee}
+                Total Entrance Fee: Php {totalEntranceFee}
               </p>
             </>
           ) : (
@@ -302,23 +304,33 @@ const SingleAccommodation = ({ initialStatus }) => {
           {/* Final Total Price */}
           {numberOfDays > 0 && (
             <div className="mt-5 font-bold bg-green-200 py-2 px-4 rounded">
-              Total Price: ₱
+              Total Price: Php{" "}
               {numberOfDays * (accommodation?.price || 0) + totalEntranceFee}
             </div>
           )}
         </div>
       </div>
-      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20">
+      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20 mb-10">
         <div className="date font-bold">Location</div>
         <div className="mb-3 flex items-center">
-          <FaMapMarker className="text-yellow-300" />{" "}
+          <FaMapMarker className="text-yellow-300 z-0" />{" "}
           <span className="ml-2 ">
             Sitio Crossing Nagbalayong , Morong, Philippines
           </span>
         </div>
-        <div className="">
+        <div>
           <Map />
         </div>
+      </div>
+      <div className="button-next w-[340px] sm:w-[1000px] flex justify-end">
+        <Button
+          onClickFunction={() => {
+            navigate("/accommodations/:id/payment");
+          }}
+          buttonName={"Proceed to Payment"}
+          buttonColor={"bg-yellow-400"}
+          buttonHoverColor={"hover:bg-yellow-300"}
+        />
       </div>
     </div>
   );

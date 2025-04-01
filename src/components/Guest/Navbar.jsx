@@ -70,7 +70,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-black bg-opacity-40 text-gray-200 sm:flex sm:justify-between sm:px-36 py-2 px-6 fixed w-full z-10">
+    <div className="bg-black bg-opacity-40 text-gray-200 sm:flex sm:justify-between sm:px-36 py-2 px-6 fixed w-full z-50">
       <div className="py-4 px-6 flex justify-between items-center">
         <div className="font-bold">LAFREZA GOLD</div>
         <button onClick={ToggleMenu} className="sm:hidden">
