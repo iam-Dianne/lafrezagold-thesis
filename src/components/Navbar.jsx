@@ -24,7 +24,7 @@ const Navbar = () => {
     "/admin/edit-staff": "Edit Staff",
     "/admin/manage-admins": "Manage Admins",
     "/admin/create-new-admin": "Create new admin",
-    "/admin/edit-admin": "Edit Admin",
+    "/admin/edit-admin/:admin_id": "Edit Admin",
     "/admin/reports": "Reports",
     "/admin/transactions": "Transactions",
     "/admin/refund-requests": "Refund Requests",

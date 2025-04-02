@@ -1,190 +1,214 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/Button";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// ALL THIS IS JUST FOR VALIDATION SCHEMA
-const schema = yup
-  .object()
-  .shape({
-    firstName: yup.string().required("First name is required"),
-    lastName: yup.string().required("Last name is required"),
-    username: yup.string().required("Username is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .matches(/[a-zA-Z]/, "Password must contain at least one letter")
-      .matches(/\d/, "Password must contain at least one number")
-      .required("Password is required"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password"),
-  })
-  .required();
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
+import Spinner from "../../components/Spinner";
 
 const CreateNewAdmin = () => {
-  // handles the form state and validation
-  // register - binds all inputs; handleSubmit - function to handle submition
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
+  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [admin, setAdmin] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
   });
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+  });
   const navigate = useNavigate();
+  const { admin_id } = useParams();
 
-  // handle form submission
-  const onSubmit = async (data) => {
-    // console.log("Form submitted", data);
+  // Fetch the current admin details (simulate fetch for this example)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost/lafreza-server/admin/edit_admin.php?admin_id=${admin_id}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
+
+        const result = await response.json();
+        console.log("API Response: ", result);
+
+        if (response.ok) {
+          setAdmin({
+            firstName: result.firstName,
+            lastName: result.lastName,
+            username: result.username,
+          });
+          setEditData({
+            firstName: result.firstName,
+            lastName: result.lastName,
+            username: result.username,
+          });
+          setLoading(false);
+        } else {
+          setErrorMessage(result.message || "Failed to load admin details");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("An error occured: ", error);
+        setErrorMessage("An unexpected error occured. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const editName = async () => {
+    const dataToSend = { ...editData, admin_id: admin_id }; // Add admin_id here
+    console.log("Sending data:", dataToSend); // Log the data being sent
     try {
       const response = await fetch(
-        "http://localhost/lafreza-server/admin/admin_signup.php",
+        "http://localhost/lafreza-server/admin/edit_admin.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify(dataToSend),
           credentials: "include",
         }
       );
 
       const result = await response.json();
+      console.log("Result:", result); // Check the response
 
       if (result.success) {
         toast.success(result.message);
-        return navigate("/admin/manage-admins");
+        setAdmin({ ...editData }); // Update admin details after successful edit
+        setIsEditing(false); // Exit edit mode
       } else {
         toast.error(result.message);
       }
     } catch (error) {
-      console.log("An error occurred: ", error);
-      toast.error("An error occured when creating an account");
+      toast.error("An error occurred while updating the admin details.");
     }
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (errorMessage) {
+    return <p className="text-center mt-10 text-red-500">{errorMessage}</p>;
+  }
+
   return (
-    <div className="flex justify-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className=" text-gray-900 mt-10 flex flex-col justify-between sm:w-[600px] xs:w-[400px]"
-      >
-        <div className="content flex flex-col">
-          <div className="admin-fullname">
+    <div className="flex justify-center mt-3">
+      <div className="back-container">
+        <Link to={"/admin/manage-admins"} className="flex items-center">
+          <FaArrowLeft className="mr-2" /> Back
+        </Link>
+      </div>
+      <div className="text-gray-900 mt-10 flex flex-col justify-between sm:w-[600px] xs:w-[400px]">
+        <div className="content flex w-full justify-between">
+          <div className="admin-fullname w-2/3">
             <div className="flex gap-4">
-              <div className="mb-4 flex flex-col w-2/3">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  placeholder="First Name"
-                  {...register("firstName")}
-                  className="rounded py-2 px-3 bg-gray-200 text-gray-900"
-                />
-                {errors.firstName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.firstName.message}
-                  </p>
+              <div className="mb-4 flex flex-col ">
+                <label htmlFor="firstName" className="text-gray-500">
+                  First Name
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={editData.firstName}
+                    onChange={handleInputChange}
+                    className="rounded py-2 px-3 bg-gray-200 text-gray-900"
+                  />
+                ) : (
+                  <span>{admin.firstName}</span>
                 )}
               </div>
               <div className="mb-4 flex flex-col w-1/3">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Last Name"
-                  {...register("lastName")}
-                  className="rounded py-2 px-3 bg-gray-200 text-gray-900"
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.lastName.message}
-                  </p>
+                <label htmlFor="lastName" className="text-gray-500">
+                  Last Name
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={editData.lastName}
+                    onChange={handleInputChange}
+                    className="rounded py-2 px-3 bg-gray-200 text-gray-900"
+                  />
+                ) : (
+                  <span>{admin.lastName}</span>
                 )}
               </div>
             </div>
           </div>
           <div className="mb-4 flex flex-col">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
-              {...register("username")}
-              className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
-            />
-            {errors.username && (
-              <p className="text-red-500 text-sm">{errors.username.message}</p>
+            <label htmlFor="username" className="text-gray-500">
+              Username
+            </label>
+            {isEditing ? (
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={editData.username}
+                onChange={handleInputChange}
+                className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
+              />
+            ) : (
+              <span>{admin.username}</span>
             )}
           </div>
-          <div className="mb-4 flex flex-col">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              {...register("email")}
-              className="rounded py-2 px-3 bg-gray-200 text-gray-900 w-full"
+        </div>
+
+        <div className="mt-5 flex gap-3">
+          {isEditing ? (
+            <>
+              <Button
+                buttonColor={"bg-yellow-400"}
+                buttonHoverColor={"bg-yellow-300"}
+                buttonName={"Save Changes"}
+                buttonWidth={"w-full"}
+                onClickFunction={editName}
+              />
+              <Button
+                buttonColor={"bg-gray-400"}
+                buttonHoverColor={"bg-gray-300"}
+                buttonName={"Cancel"}
+                buttonWidth={"w-full"}
+                onClickFunction={() => setIsEditing(false)}
+              />
+            </>
+          ) : (
+            <Button
+              buttonColor={"bg-blue-400"}
+              buttonHoverColor={"bg-blue-300"}
+              buttonName={"Edit Names"}
+              buttonWidth={"w-full"}
+              onClickFunction={() => setIsEditing(true)}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="password">
-            <div className="flex gap-4">
-              <div className="mb-4 flex flex-col w-1/2">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  {...register("password")}
-                  className="rounded py-2 px-3 bg-gray-200 text-gray-900"
-                />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4 flex flex-col w-1/2">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  {...register("confirmPassword")}
-                  className="rounded py-2 px-3 bg-gray-200 text-gray-900"
-                />
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+          )}
         </div>
-        <div className="mt-10">
-          <Button
-            buttonColor={"bg-yellow-400"}
-            buttonHoverColor={"bg-yellow-300"}
-            buttonName={"Create Account"}
-            buttonWidth={"w-full"}
-          />
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

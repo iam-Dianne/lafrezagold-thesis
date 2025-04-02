@@ -39,6 +39,7 @@ import CreateNewStaff from "./pages/Admin/CreateNewStaff";
 import EditStaff from "./pages/Admin/EditStaff";
 import EditAdmin from "./pages/Admin/EditAdmin";
 import SingleAccommodation from "./pages/Guest/SingleAccommodation";
+import CartPage from "./pages/Guest/CartPage";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -83,7 +84,7 @@ const App = () => {
           <Route path="/admin/edit-staff" element={<EditStaff />} />
           <Route path="/admin/manage-admins" element={<ManageAdmins />} />
           <Route path="/admin/create-new-admin" element={<CreateNewAdmin />} />
-          <Route path="/admin/edit-admin" element={<EditAdmin />} />
+          <Route path="/admin/edit-admin/:admin_id" element={<EditAdmin />} />
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
         </Route>
@@ -95,6 +96,7 @@ const App = () => {
 
           <Route path="/accommodations" element={<Accommodations />} />
           <Route path="/accommodations/:id" element={<SingleAccommodation />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
       </>
     )

@@ -125,7 +125,7 @@ const AdminTables = () => {
                     buttonColor={"bg-blue-600"}
                     buttonHoverColor={"hover:bg-blue-500"}
                     onClickFunction={() => {
-                      navigate("/admin/edit-admin");
+                      navigate(`/admin/edit-admin/${admin.admin_id}`);
                     }}
                   />
                   <Button

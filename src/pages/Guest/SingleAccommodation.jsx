@@ -3,16 +3,14 @@ import Spinner from "../../components/Spinner";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ProgressBar from "../../components/Guest/ProgressBar";
 import Button from "../../components/Button";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-import { number } from "yup";
-import Map from "../../components/Guest/Map";
-import { FaMapMarker } from "react-icons/fa";
 
 const SingleAccommodation = ({ initialStatus }) => {
   const { id } = useParams();
@@ -38,7 +36,7 @@ const SingleAccommodation = ({ initialStatus }) => {
     const fetchAccommodation = async () => {
       try {
         const response = await fetch(
-          `http://localhost/lafreza-server/admin/fetch_single_accomodation.php?id=${id}`,
+          `http://localhost/lafreza-server/guest/guest_fetch_single_accommodation.php?id=${id}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -123,6 +121,53 @@ const SingleAccommodation = ({ initialStatus }) => {
   const totalEntranceFee = calculateEntranceFee();
   const totalPrice =
     numberOfDays * (accommodation?.price || 0) + totalEntranceFee;
+
+  const guestId = localStorage.getItem("guest_id");
+
+  const handleAddToCart = async () => {
+    if (!dateFrom || !dateTo) {
+      toast.error("Please input date of reservation.");
+      return;
+    }
+
+    if (!guestId) {
+      navigate("/login");
+      return;
+    }
+
+    const cartItem = {
+      guest_id: guestId,
+      accommodation_id: accommodation.id,
+      accommodation_name: accommodation.accomodation_name,
+      date_from: dateFrom,
+      date_to: dateTo,
+      adults,
+      children,
+      total_price: totalPrice,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/guest/add_to_cart.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cartItem),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Successfully added to cart!");
+        navigate("/cart");
+      } else {
+        console.log("Failed to add to cart", result);
+      }
+    } catch (error) {
+      console.log("Error adding to cart: ", error);
+    }
+  };
 
   if (loading) {
     return <Spinner />;
@@ -310,22 +355,17 @@ const SingleAccommodation = ({ initialStatus }) => {
           )}
         </div>
       </div>
-      <div className="bg-gray-100 w-[340px] sm:w-[1000px] 2xl:w-[1300px] shadow-lg rounded-lg p-5 sm:px-14 2xl:px-20 mb-10">
-        <div className="date font-bold">Location</div>
-        <div className="mb-3 flex items-center">
-          <FaMapMarker className="text-yellow-300 z-0" />{" "}
-          <span className="ml-2 ">
-            Sitio Crossing Nagbalayong , Morong, Philippines
-          </span>
-        </div>
-        <div>
-          <Map />
-        </div>
-      </div>
-      <div className="button-next w-[340px] sm:w-[1000px] flex justify-end">
+
+      <div className="button-next w-[340px] sm:w-[1000px] flex justify-end gap-5">
+        <Button
+          onClickFunction={handleAddToCart}
+          buttonName={"Add to Cart"}
+          buttonColor={"bg-blue-400"}
+          buttonHoverColor={"hover:bg-blue-300"}
+        />
         <Button
           onClickFunction={() => {
-            navigate("/accommodations/:id/payment");
+            navigate("/payment");
           }}
           buttonName={"Proceed to Payment"}
           buttonColor={"bg-yellow-400"}
