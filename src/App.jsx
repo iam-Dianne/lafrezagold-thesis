@@ -26,6 +26,12 @@ import EditAccommodation from "./pages/Admin/EditAccommodation";
 import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
 
+import ProtectedRoutStaff from "./pages/Staff/ProtectedRouteStaff";
+import StaffLogin from "./pages/Staff/StaffLogin";
+import StaffLayout from "./layouts/StaffLayout";
+
+
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -82,6 +88,19 @@ const App = () => {
           <Route path="/admin/create-new-admin" element={<CreateNewAdmin />} />
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
+        </Route>
+
+        <Route path="/staff-login" element={<StaffLogin />} />
+
+        <Route
+          path="/staff"
+          element={
+            <ProtectedRoutStaff>
+              <StaffLayout />
+            </ProtectedRoutStaff>
+          }>
+
+          <Route path="/staff/guests" element={<Guests />} />
         </Route>
 
         <Route path="/" element={<GuestLayout />}>
