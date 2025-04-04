@@ -144,7 +144,7 @@ const SidebarMenuStaff = () => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/admin/guests-feedback"
+                                            to="/staff/guests-feedback"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             Guest Feedback
@@ -175,7 +175,7 @@ const SidebarMenuStaff = () => {
                                 >
                                     <li>
                                         <Link
-                                            to="/admin/reservations"
+                                            to="/staff/reservations"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             All Reservations
@@ -183,7 +183,7 @@ const SidebarMenuStaff = () => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/admin/reservations-history"
+                                            to="/staff/reservations-history"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             Reservation History
@@ -191,7 +191,7 @@ const SidebarMenuStaff = () => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/admin/reservations-calendar"
+                                            to="/staff/reservations-calendar"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             Calendar
@@ -222,7 +222,7 @@ const SidebarMenuStaff = () => {
                                 >
                                     <li>
                                         <Link
-                                            to="/admin/transactions"
+                                            to="/staff/transactions"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             All Transactions
@@ -230,7 +230,7 @@ const SidebarMenuStaff = () => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/admin/refund-requests"
+                                            to="/staff/refund-requests"
                                             className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                                         >
                                             Refund Requests

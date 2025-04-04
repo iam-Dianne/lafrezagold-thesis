@@ -26,6 +26,16 @@ const Navbar = () => {
     "/admin/reports": "Reports",
     "/admin/transactions": "Transactions",
     "/admin/refund-requests": "Refund Requests",
+
+    "/staff": "Dashboard",
+    "/staff/guests": "Guests",
+    "/staff/guests-history": "Guest History",
+    "/staff/guests-feedback": "Guest Feedbacks",
+    "/staff/reservations": "Reservations",
+    "/staff/reservations-history": "Reservation History",
+    "/staff/reservations-calendar": "Reservation Calendar",
+    "/staff/transactions": "Transactions",
+    "/staff/refund-requests": "Refund Requests",
   };
 
   // logic and fallback

@@ -26,9 +26,13 @@ import EditAccommodation from "./pages/Admin/EditAccommodation";
 import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
 
+
+
+
 import ProtectedRoutStaff from "./pages/Staff/ProtectedRouteStaff";
 import StaffLogin from "./pages/Staff/StaffLogin";
 import StaffLayout from "./layouts/StaffLayout";
+
 
 
 
@@ -99,8 +103,21 @@ const App = () => {
               <StaffLayout />
             </ProtectedRoutStaff>
           }>
-
+          <Route index element={<Dashboard />} />
+          <Route path="/staff/reservations" element={<Reservations />} />
+          <Route
+            path="/staff/reservations-history"
+            element={<ReservationsHistory />}
+          />
+          <Route
+            path="/staff/reservations-calendar"
+            element={<ReservationsCalendar />}
+          />
           <Route path="/staff/guests" element={<Guests />} />
+          <Route path="/staff/guests-feedback" element={<GuestsFeedback />} />
+          <Route path="/staff/transactions" element={<Transactions />} />
+          <Route path="/staff/refund-requests" element={<RefundRequests />} />
+
         </Route>
 
         <Route path="/" element={<GuestLayout />}>
