@@ -4,11 +4,14 @@ import { FaTrash } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -87,6 +90,8 @@ const CartPage = () => {
     return <Spinner />;
   }
 
+  const downpayment = totalPrice / 2;
+
   return (
     <div className="w-full min-h-screen pt-24 pb-24 guest-form-bg px-8 sm:px-44">
       <div className="flex flex-col w-full sm:flex-row gap-5">
@@ -126,14 +131,35 @@ const CartPage = () => {
           )}
         </div>
         <div className="flex flex-col sm:w-2/5 gap-3">
-          <div className="price  shadow-lg rounded-lg p-5 sm:px-8 2xl:px-20 bg-gray-100 h-[70px] text-lg flex justify-between items-center">
-            Total Price:{" "}
-            <span className="text-red-500">Php {totalPrice}.00</span>
+          <div className="price shadow-lg rounded-lg p-5 sm:px-8 2xl:px-20 bg-gray-100 ">
+            <ul>
+              <li>
+                <div className="flex justify-between text-gray-500">
+                  <div>Total Price: </div>
+                  <div>Php {totalPrice}.00</div>
+                </div>
+              </li>
+              <li>
+                <div className="flex justify-between text-gray-500">
+                  <div>50% Downpayment: </div>
+                  <div>Php {downpayment}.00</div>
+                </div>
+              </li>
+              <li className="mt-5">
+                <div className="flex justify-between text-lg">
+                  <div>Amount to Pay: </div>
+                  <div className="text-red-500">Php {downpayment}.00</div>
+                </div>
+              </li>
+            </ul>
           </div>
           <Button
             buttonColor={"bg-yellow-400"}
             buttonHoverColor={"hover:bg-yellow-300"}
-            buttonName={"Proceed to Payment"}
+            buttonName={"Proceed to Checkout"}
+            onClickFunction={() => {
+              navigate("/checkout");
+            }}
           />
         </div>
       </div>

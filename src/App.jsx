@@ -40,6 +40,7 @@ import EditStaff from "./pages/Admin/EditStaff";
 import EditAdmin from "./pages/Admin/EditAdmin";
 import SingleAccommodation from "./pages/Guest/SingleAccommodation";
 import CartPage from "./pages/Guest/CartPage";
+import PaymentPage from "./pages/Guest/PaymentPage";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -97,6 +98,7 @@ const App = () => {
           <Route path="/accommodations" element={<Accommodations />} />
           <Route path="/accommodations/:id" element={<SingleAccommodation />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<PaymentPage />} />
         </Route>
       </>
     )

@@ -23,6 +23,7 @@ const SingleAccommodation = ({ initialStatus }) => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [numberOfDays, setNumberOfDays] = useState(0);
+  const [availabilityError, setAvailabilityError] = useState("");
 
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
@@ -89,7 +90,7 @@ const SingleAccommodation = ({ initialStatus }) => {
   };
 
   // handle date change
-  const handleDateChange = (e, type) => {
+  const handleDateChange = async (e, type) => {
     const value = e.target.value;
     if (type === "from") {
       setDateFrom(value);
@@ -135,18 +136,18 @@ const SingleAccommodation = ({ initialStatus }) => {
       return;
     }
 
-    const cartItem = {
-      guest_id: guestId,
-      accommodation_id: accommodation.id,
-      accommodation_name: accommodation.accomodation_name,
-      date_from: dateFrom,
-      date_to: dateTo,
-      adults,
-      children,
-      total_price: totalPrice,
-    };
-
     try {
+      const cartItem = {
+        guest_id: guestId,
+        accommodation_id: accommodation.id,
+        accommodation_name: accommodation.accomodation_name,
+        date_from: dateFrom,
+        date_to: dateTo,
+        adults,
+        children,
+        total_price: totalPrice,
+      };
+
       const response = await fetch(
         "http://localhost/lafreza-server/guest/add_to_cart.php",
         {
@@ -165,9 +166,42 @@ const SingleAccommodation = ({ initialStatus }) => {
         console.log("Failed to add to cart", result);
       }
     } catch (error) {
-      console.log("Error adding to cart: ", error);
+      console.log("Error checking availability: ", error);
     }
   };
+
+  const checkAvailability = async (accommodationId, fromDate, toDate) => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/guest/check_availability.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            accommodation_id: accommodationId,
+            date_from: fromDate,
+            date_to: toDate,
+          }),
+        }
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        setAvailabilityError("");
+      } else {
+        setAvailabilityError(data.message);
+      }
+    } catch (error) {
+      console.error("Availability check failed:", error);
+      setAvailabilityError("Error checking availability.");
+    }
+  };
+
+  useEffect(() => {
+    if (accommodation && dateFrom && dateTo) {
+      checkAvailability(accommodation.id, dateFrom, dateTo);
+    }
+  }, [dateFrom, dateTo]);
 
   if (loading) {
     return <Spinner />;
@@ -266,6 +300,9 @@ const SingleAccommodation = ({ initialStatus }) => {
               />
             </div>
           </div>
+          {availabilityError && (
+            <p className="text-center mt-5 text-red-500">{availabilityError}</p>
+          )}
           <div className="mt-3 mb-3">
             <span className="font-bold">No. of days:</span>{" "}
             <span>{numberOfDays}</span>
@@ -365,9 +402,9 @@ const SingleAccommodation = ({ initialStatus }) => {
         />
         <Button
           onClickFunction={() => {
-            navigate("/payment");
+            navigate("/checkout");
           }}
-          buttonName={"Proceed to Payment"}
+          buttonName={"Proceed to Checkout"}
           buttonColor={"bg-yellow-400"}
           buttonHoverColor={"hover:bg-yellow-300"}
         />
