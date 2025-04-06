@@ -76,6 +76,11 @@ const PaymentPage = () => {
 
   const downpayment = totalPrice / 2;
 
+  const handleProceedToPayment = () => {
+    window.location.href =
+      "http://localhost/lafreza-server/guest/create_checkout.php";
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -157,6 +162,7 @@ const PaymentPage = () => {
             buttonColor={"bg-yellow-400"}
             buttonHoverColor={"hover:bg-yellow-300"}
             buttonWidth={"w-full"}
+            onClickFunction={handleProceedToPayment}
           />
         </div>
       </div>
