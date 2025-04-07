@@ -115,7 +115,7 @@ const ReservationsTable = () => {
               <select
                 name="status"
                 value={reservation.status}
-                className="rounded-lg py-3 px-5 w-full bg-gray-200"
+                className="rounded-lg py-3 px-2 w-full bg-gray-200"
                 onChange={(e) =>
                   updateReservationStatus(
                     reservation.reservation_id,

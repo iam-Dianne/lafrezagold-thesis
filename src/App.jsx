@@ -42,6 +42,8 @@ import SingleAccommodation from "./pages/Guest/SingleAccommodation";
 import CartPage from "./pages/Guest/CartPage";
 import PaymentPage from "./pages/Guest/PaymentPage";
 
+import StaffLayout from "./layouts/StaffLayout";
+
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -89,6 +91,8 @@ const App = () => {
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
         </Route>
+
+        <Route path="/staff" element={<StaffLayout />}></Route>
 
         <Route path="/" element={<GuestLayout />}>
           <Route index element={<Homepage />} />

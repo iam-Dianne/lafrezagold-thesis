@@ -10,7 +10,7 @@ const GuestsTable = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [reservation, setReservation] = useState("None");
+  const [reservation, setReservation] = useState([]);
 
   const [activeModal, setActiveModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -30,8 +30,8 @@ const GuestsTable = () => {
         const result = await response.json();
 
         if (response.ok) {
-          const sortedData = result.data.sort((a, b) => a.id - b.id);
-          setGuests(sortedData);
+          // const sortedData = result.data.sort((a, b) => a.id - b.id);
+          setGuests(result.data);
           setLoading(false);
         } else {
           setErrorMessage(result.message || "Failed to load accommodations.");
@@ -47,6 +47,30 @@ const GuestsTable = () => {
     fetchData();
   }, []);
 
+  const fetchReservation = async (guestId) => {
+    try {
+      const response = await fetch(
+        `http://localhost/lafreza-server/admin/fetch_reservation_info.php?guest_id=${guestId}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok && result.data) {
+        setReservation(result.data.status);
+      } else {
+        setReservation("No reservation found");
+      }
+    } catch (error) {
+      console.log("An error occurred: ", error);
+      setReservation("Error fetching reservation");
+    }
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -59,6 +83,7 @@ const GuestsTable = () => {
     setSelectedGuest(guest);
     setReservation("None");
     setActiveModal(true);
+    await fetchReservation(guest.id);
   };
 
   const deleteGuest = async (id) => {
@@ -157,7 +182,31 @@ const GuestsTable = () => {
               </li>
               <li className="mt-4 ">
                 <span className="text-gray-500">Reservation: </span>
-                {reservation}
+                {reservation.length > 0 ? (
+                  <ul className="mt-1 space-y-1">
+                    {reservation.map((res, index) => (
+                      <li
+                        key={index}
+                        className="bg-white p-2 rounded shadow text-sm"
+                      >
+                        <div>
+                          <strong>Accommodation:</strong>{" "}
+                          {res.accommodation_name}
+                        </div>
+                        <div>
+                          <strong>Check-in:</strong> {res.check_in}
+                        </div>
+                        <div>
+                          <strong>Check-out:</strong> {res.check_out}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="text-sm mt-1 text-gray-600">
+                    No reservation found
+                  </div>
+                )}
               </li>
             </ul>
 
