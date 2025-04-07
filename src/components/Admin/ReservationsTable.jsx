@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 
@@ -40,6 +39,40 @@ const ReservationsTable = () => {
     fetchData();
   }, []);
 
+  const updateReservationStatus = async (reservationId, newStatus) => {
+    try {
+      const response = await fetch(
+        "http://localhost/lafreza-server/admin/update_reservation_status.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            reservation_id: reservationId,
+            status: newStatus,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        console.log(`Updated status for reservation ${reservationId}`);
+        setReservations((prev) =>
+          prev.map((r) =>
+            r.reservation_id === reservationId ? { ...r, status: newStatus } : r
+          )
+        );
+      } else {
+        alert("Failed to update status: " + result.message);
+      }
+    } catch (err) {
+      console.error("Error updating status", err);
+      alert("An error occurred while updating status.");
+    }
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -49,16 +82,16 @@ const ReservationsTable = () => {
   }
 
   return (
-    <table className="w-full mb-4">
+    <table className="w-full mb-4 mt-5">
       <thead className="mb-2">
         <tr className="mb-2">
           <th className="w-10">ID</th>
           <th className="w-1/6">Guest ID</th>
           <th className="w-1/6">Accommodation</th>
-          <th className="w-1/4">Date</th>
+          <th className="w-1/6">Date</th>
           <th className="w-1/6">Total Price</th>
           <th className="w-1/6">Update</th>
-          <th className="w-1/6">Status</th>
+          <th className="w-1/4">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -71,14 +104,31 @@ const ReservationsTable = () => {
             <td className="w-1/6 py-1 px-2 border">
               {reservation.accomodation_name}
             </td>
-            <td className="w-1/4 py-1 px-2 border">
+            <td className="w-1/6 py-1 px-2 border">
               {reservation.date_from} to {reservation.date_to}
             </td>
             <td className="w-1/6 py-1 px-2 border">
               Php {reservation.total_price}
             </td>
             <td className="w-1/6 py-1 px-2 border">{reservation.updated_at}</td>
-            <td className="w-1/6 py-1 px-2 border">Status</td>
+            <td className="w-1/4 py-1 px-2 ">
+              <select
+                name="status"
+                value={reservation.status}
+                className="rounded-lg py-3 px-5 w-full bg-gray-200"
+                onChange={(e) =>
+                  updateReservationStatus(
+                    reservation.reservation_id,
+                    e.target.value
+                  )
+                }
+              >
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="declined">Declined</option>
+                <option value="canceled">Canceled</option>
+              </select>
+            </td>
           </tr>
         ))}
       </tbody>

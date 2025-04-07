@@ -182,14 +182,14 @@ const SidebarMenu = () => {
                       All Reservations
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       to="/admin/reservations-history"
                       className="flex items-center justify-between w-full pl-9 text-gray-900 hover:bg-gray-300 py-2 px-3 rounded-lg"
                     >
                       Reservation History
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link
                       to="/admin/reservations-calendar"
