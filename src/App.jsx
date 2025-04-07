@@ -26,6 +26,16 @@ import EditAccommodation from "./pages/Admin/EditAccommodation";
 import Transactions from "./pages/Admin/Transactions";
 import RefundRequests from "./pages/Admin/RefundRequests";
 
+
+
+
+import ProtectedRoutStaff from "./pages/Staff/ProtectedRouteStaff";
+import StaffLogin from "./pages/Staff/StaffLogin";
+import StaffLayout from "./layouts/StaffLayout";
+
+
+
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -88,6 +98,32 @@ const App = () => {
           <Route path="/admin/edit-admin/:admin_id" element={<EditAdmin />} />
           <Route path="/admin/transactions" element={<Transactions />} />
           <Route path="/admin/refund-requests" element={<RefundRequests />} />
+        </Route>
+
+        <Route path="/staff-login" element={<StaffLogin />} />
+
+        <Route
+          path="/staff"
+          element={
+            <ProtectedRoutStaff>
+              <StaffLayout />
+            </ProtectedRoutStaff>
+          }>
+          <Route index element={<Dashboard />} />
+          <Route path="/staff/reservations" element={<Reservations />} />
+          <Route
+            path="/staff/reservations-history"
+            element={<ReservationsHistory />}
+          />
+          <Route
+            path="/staff/reservations-calendar"
+            element={<ReservationsCalendar />}
+          />
+          <Route path="/staff/guests" element={<Guests />} />
+          <Route path="/staff/guests-feedback" element={<GuestsFeedback />} />
+          <Route path="/staff/transactions" element={<Transactions />} />
+          <Route path="/staff/refund-requests" element={<RefundRequests />} />
+
         </Route>
 
         <Route path="/" element={<GuestLayout />}>
