@@ -19,7 +19,6 @@ const CardRow = () => {
         console.log(result);
 
         if (result.success) {
-          // Since you're returning the count, just set it directly
           setTodayBookings(result.total_bookings);
         } else {
           console.error(result.message);
@@ -30,6 +29,50 @@ const CardRow = () => {
     };
 
     fetchTodayBookings();
+  }, []);
+
+  useEffect(() => {
+    const fetchCheckedInRooms = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost/lafreza-server/admin/fetch_checked_in.php"
+        );
+        const result = await response.json();
+        console.log(result);
+
+        if (result.success) {
+          setCheckedInRooms(result.checked_in_rooms);
+        } else {
+          console.error(result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching checked-in rooms:", error);
+      }
+    };
+
+    fetchCheckedInRooms();
+  }, []);
+
+  useEffect(() => {
+    const fetchPendingReservations = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost/lafreza-server/admin/fetch_pending.php"
+        );
+        const result = await response.json();
+        console.log(result);
+
+        if (result.success) {
+          setPendingReservations(result.pending_reservations); // Assuming pending_count is returned
+        } else {
+          console.error(result.message);
+        }
+      } catch (error) {
+        console.error("Error fetching pending reservations:", error);
+      }
+    };
+
+    fetchPendingReservations();
   }, []);
 
   return (
