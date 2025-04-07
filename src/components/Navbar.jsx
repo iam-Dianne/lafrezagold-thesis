@@ -52,10 +52,6 @@ const Navbar = () => {
     <div className="flex justify-between text-gray-900 h-10">
       <h1 className="text-2xl font-bold">{title}</h1>
       <div className="relatie profile-icon flex flex-col items-center mr-3">
-        <h className="absolute top-200 right-8 w-40 text-gray-900 px-3 py-4">
-          Hi
-        </h>
-
         {/* <button className="flex mb-4" onClick={toggleDropdown}>
           <FaUserCircle size={28} className="mr-1" />
           <RiArrowDropDownLine size={28} /> 

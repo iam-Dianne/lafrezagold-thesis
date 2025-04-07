@@ -45,6 +45,8 @@ import EditAdmin from "./pages/Admin/EditAdmin";
 import SingleAccommodation from "./pages/Guest/SingleAccommodation";
 import CartPage from "./pages/Guest/CartPage";
 import PaymentPage from "./pages/Guest/PaymentPage";
+import PaymentSuccess from "./pages/Guest/PaymentSuccess";
+import GuestProfile from "./pages/Guest/GuestProfile";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -124,11 +126,16 @@ const App = () => {
           <Route index element={<Homepage />} />
           <Route path="/login" element={<GuestLogin />} />
           <Route path="/sign-up" element={<GuestSignup />} />
+          <Route path="/profile" element={<GuestProfile />} />
 
           <Route path="/accommodations" element={<Accommodations />} />
           <Route path="/accommodations/:id" element={<SingleAccommodation />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<PaymentPage />} />
+          <Route
+            path="/checkout/payment-successful"
+            element={<PaymentSuccess />}
+          />
         </Route>
       </>
     )

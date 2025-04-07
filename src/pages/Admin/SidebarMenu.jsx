@@ -43,9 +43,6 @@ const SidebarMenu = () => {
   };
 
   const [activeDropdown, setActiveDropdown] = useState("");
-
-  // setActiveDropdown naguupdate ng activeDropdown state and keeps track if it is currently active or nah
-  // so bali Clicking on an already-open dropdown closes it.
   const toggleDropdown = (dropdown) => {
     // so this basically says: is this dropdown already open? if not the drop down eyy
     setActiveDropdown((prev) => (prev === dropdown ? "" : dropdown));

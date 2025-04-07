@@ -76,9 +76,32 @@ const PaymentPage = () => {
 
   const downpayment = totalPrice / 2;
 
-  const handleProceedToPayment = () => {
-    window.location.href =
-      "http://localhost/lafreza-server/guest/create_checkout.php";
+  const handleProceedToPayment = async () => {
+    const guestId = localStorage.getItem("guest_id");
+    if (!guestId) {
+      console.log("Guest ID is missing");
+      return;
+    }
+
+    const response = await fetch(
+      "http://localhost/lafreza-server/guest/create_checkout.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ guest_id: guestId, amount: downpayment * 100 }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      const checkoutUrl = result.checkoutUrl;
+      window.open(checkoutUrl, "_blank");
+    } else {
+      console.error("Failed to create reservation: ", result.message);
+    }
   };
 
   if (loading) {
