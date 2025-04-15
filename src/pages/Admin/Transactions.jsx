@@ -1,10 +1,10 @@
 import React from "react";
-import TransactionTable from "../../components/Admin/TransactionTable";
+import TransactionsTable from "../../components/Admin/TransactionsTable";
 
 const Transactions = () => {
   return (
     <div>
-      <TransactionTable />
+      <TransactionsTable />
     </div>
   );
 };
